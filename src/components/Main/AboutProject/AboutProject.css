@@ -1,12 +1,21 @@
 .aboutProject__container {
   display: flex;
   flex-direction: column;
-  margin: 110px auto;
+  margin: 110px auto 0 auto;
   max-width: calc(100% - 140px);
 }
 
+.aboutProject__section-info {
+  display: grid;
+  grid-template-columns: 228px 1fr;
+  grid-template-rows: repeat(2, auto);
+  justify-items: center;
+}
+
 .aboutProject__subtitle {
-  margin: 0 0 22px 0;
+  margin: 0;
+  padding: 0 0 23px 0;
+  border-bottom: 1px solid #000000;
   font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
   font-size: 22px;
   line-height: 27px;
@@ -18,7 +27,6 @@
 .aboutProject__infoblock {
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid #000000;
 }
 
 .aboutProject__section {
@@ -49,7 +57,7 @@
   padding: 9px 0;
   color: #FFFFFF;
   text-align: center;
-  max-width: 228px;
+  width: 228px;
   background-color: #000000;
   font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
   font-size: 14px;
@@ -59,7 +67,7 @@
 }
 
 .aboutProject__text {
-  padding: 14px 0;
+  padding: 14px 0 0 0;
   background-color: #FFFFFF;
   color: #A0A0A0;
   font-weight: 500;
@@ -68,9 +76,74 @@
 .aboutProject__text_timing-white {
   background-color: #FFFFFF;
   color: #000000;
-  max-width: 188px;
 }
 
-.aboutProject__text_removed {
-  max-width: 188px;
+@media screen and (max-width: 900px) {
+  .aboutProject__container {
+    margin: 91px auto;
+    max-width: calc(100% - 100px);
+  }
+
+  .aboutProject__section {
+    max-width: 319px;
+  }
+
+  .aboutProject__section-info {
+    grid-template-columns: 140px 1fr;
+  }
+
+  .aboutProject__section-text {
+    margin: 22px 0 93px 0;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .aboutProject__text_timing {
+    max-width: 140px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .aboutProject__container {
+    margin: 70px auto;
+    max-width: calc(100% - 36px);
+  }
+
+  .aboutProject__infoblock {
+    display: block;
+  }
+
+  .aboutProject__subtitle {
+    padding: 0 0 28px 0;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .aboutProject__section-subtitle {
+    margin: 60px 0 0 0;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .aboutProject__section-text {
+    margin: 16px 0 56px 0;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .aboutProject__section-subtitle_removed {
+    margin: 0;
+  }
+
+  .aboutProject__text_timing {
+    max-width: 100px;
+    font-size: 11px;
+    line-height: 13px;
+    padding: 11px 0;
+  }
+
+  .aboutProject__section-info {
+    margin: 4px 0 0 0;
+    grid-template-columns: 100px 1fr;
+  }
 }
