@@ -46,7 +46,7 @@
 }
 
 .aboutMe__link {
-  margin: 99px 0 0 0;
+  margin: 33px 0 0 0;
   color: #000000;
   font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
   font-size: 14px;
@@ -64,9 +64,10 @@
 
 .aboutMe__foto {
   margin: 66px 0 0 0;
-  max-width: 270px;
-  max-height: 327px;
+  width: 270px;
+  height: 327px;
   border-radius: 10px;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 900px) {
@@ -96,12 +97,12 @@
   }
 
   .aboutMe__link {
-    margin: 87px 0 0 0;
+    margin: 33px 0 0 0;
   }
 
   .aboutMe__foto {
-    max-width: 255px;
-    max-height: 307px;
+    width: 255px;
+    height: 307px;
   }
 }
 
@@ -125,8 +126,8 @@
   .aboutMe__foto {
     margin: 60px auto 0 auto;
     align-self: center;
-    max-width: 100%;
-    max-height: fit-content;
+    width: 292px;
+    height: 352px;
   }
 
   .aboutMe__section-subtitle {
