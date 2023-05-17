@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
+import Footer from '../Footer/Footer';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -15,9 +16,8 @@ function App() {
               <Header
                 // headerText={'Войти'}
               />
-              <Main>
-
-              </Main>
+              <Main />
+              <Footer />
             </>
           }
         />
