@@ -2,7 +2,6 @@
   display: flex;
   padding: 0 0 69px 0;
   margin: 0;
-  max-width: 1140px;
   border-bottom: 1px solid #E8E8E8;
 }
 
@@ -57,4 +56,32 @@
   background-size: 13px 17px;
   background-repeat: no-repeat;
   background-position: 34px 50%;
+}
+
+@media screen and (max-width: 900px) {
+  .searchform__container {
+    padding: 0 0 109px 0;
+  }
+
+  .searchform__input {
+    width: calc(100% - 160px);
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .searchform__form {
+    flex-direction: column;
+    position: relative;
+  }
+
+  .searchform__input-block {
+    width: 100%;
+  }
+
+  .searchform__input {
+    padding: 0 0 0 19px;
+    font-size: 14px;
+    width: calc(100% - 118px);
+    background-position: -20px 50%;
+  }
 }

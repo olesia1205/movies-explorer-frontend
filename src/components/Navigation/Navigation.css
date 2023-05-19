@@ -56,3 +56,15 @@
   font-weight: 500;
   padding: 0 16px 0 0;
 }
+
+.navigation__account-burger {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+
+
+  .navigation__account-burger {
+    display: block;
+  }
+}

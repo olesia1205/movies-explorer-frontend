@@ -10,7 +10,7 @@
   align-items: center;
   width: 226px;
   border-left: 1px solid #CBCBCB;
-  margin: 11px 30px 11px 0;
+  margin: 16px 30px 16px 0;
   font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
   font-size: 13px;
   line-height: 40px;
@@ -61,5 +61,24 @@
   transform: translateX(20px);
 }
 
+@media screen and (max-width: 900px) {
+  .searchform__checkbox-container {
+    padding: 0 0 0 20px;
+  }
 
+  .searchform__checkbox-label {
+    margin: 16px 20px 16px 0;
+    width: 231px;
+  }
+}
 
+@media screen and (max-width: 650px) {
+  .searchform__checkbox-label {
+    position: absolute;
+    top: 103px;
+    font-size: 11px;
+    line-height: 18px;
+    border-left: none;
+    width: 167px;
+  }
+}

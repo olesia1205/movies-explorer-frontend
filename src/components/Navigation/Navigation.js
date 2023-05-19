@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import  accountLogo from '../../images/account__logo.svg';
+// import burgerIcon from '../../images/header__burger-icon.svg';
 
 function Navigation() {
   return (
@@ -18,7 +19,11 @@ function Navigation() {
           </button>
         </Link>
       </div>
+      {/* <button className="navigation__account-burger">
+        <img src={burgerIcon} alt="Кнопка открытия бургер-меню" />
+      </button> */}
     </nav>
+
   );
 }
 
