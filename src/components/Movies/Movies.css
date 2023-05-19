@@ -1,0 +1,6 @@
+.movies__container {
+  display: flex;
+  flex-direction: column;
+  margin: 67px 70px 10px;
+  max-width: calc(100% - 140px);
+}

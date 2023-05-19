@@ -1,0 +1,65 @@
+.searchform__checkbox-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0 0 30px;
+}
+
+.searchform__checkbox-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 226px;
+  border-left: 1px solid #CBCBCB;
+  margin: 11px 30px 11px 0;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 13px;
+  line-height: 40px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.searchform__checkbox {
+  display: inline-block;
+  position: relative;
+  width: 34px;
+  height: 14px;
+}
+
+.searchform__checkbox_invisible {
+  display: none;
+}
+
+.searchform__checkbox_visible {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #EBEBEB;
+  border-radius: 12px;
+  transition: 0.4s linear;
+}
+
+.searchform__checkbox_visible:before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  left: 2px;
+  bottom: 2px;
+  transition: 0.4s linear;
+}
+
+.searchform__checkbox_invisible:checked + .searchform__checkbox_visible {
+  background-color: #2BE080;
+}
+
+.searchform__checkbox_invisible:checked + .searchform__checkbox_visible:before {
+  transform: translateX(20px);
+}
+
+
+

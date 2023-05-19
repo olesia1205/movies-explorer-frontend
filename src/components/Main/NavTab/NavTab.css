@@ -20,7 +20,7 @@
   cursor: pointer;
 }
 
-.navTab__button {
+.navTab__button:hover {
   opacity: 80%;
 }
 
