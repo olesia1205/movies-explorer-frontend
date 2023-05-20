@@ -21,6 +21,7 @@
   padding: 18px 0 18px 70px;
   transition: opacity 0.35s linear;
   cursor: pointer;
+  background-color: transparent;
 }
 
 .header__logo:hover {

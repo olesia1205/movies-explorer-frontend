@@ -5,6 +5,7 @@ import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Movies from '../Movies/Movies';
 
+
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
   // const [loggedIn, setLoggedIn] = useState(false);

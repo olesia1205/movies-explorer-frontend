@@ -50,6 +50,12 @@
   height: 30px;
   padding: 8px 0;
   background-color: #F9F9F9;
+  transition: opacity 0.35s linear;
+  cursor: pointer;
+}
+
+.navigation__account-logo:hover {
+  opacity: 80%;
 }
 
 .navigation__link-movies {
