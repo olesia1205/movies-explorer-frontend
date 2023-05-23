@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 function Header({ loggedIn, headerClass }) {
   return (
     <header className={headerClass}>
-      <Link exact to="/">
+      <Link className="header__logo-link" to="/">
         <img className="header__logo" src={headerLogo} alt="Логотип"/>
       </Link>
       {loggedIn ? (

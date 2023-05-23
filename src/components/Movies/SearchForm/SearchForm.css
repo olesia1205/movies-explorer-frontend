@@ -12,16 +12,9 @@
   background-color: #FDFDFD;
   border-radius: 9px;
   width: 100%;
-  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
 }
 
 .searchform__form:focus-within {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #FDFDFD;
-  border-radius: 9px;
-  width: 100%;
   box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
 }
 

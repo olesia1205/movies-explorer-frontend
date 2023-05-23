@@ -6,6 +6,11 @@
   align-items: flex-start;
 }
 
+.header__logo-link {
+  text-decoration: none;
+  line-height: 0.75;
+}
+
 .header__unlogged {
   margin: 0 auto;
   max-width: 100%;
@@ -102,8 +107,8 @@
 
   .header__button {
     width: 54px;
-    height: 26px;
     font-size: 10px;
+    padding: 5px 0;
   }
 
   .header__link {
