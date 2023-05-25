@@ -15,7 +15,7 @@
 
 @media screen and (max-width: 680px) {
   .movies__container {
-    margin: 76px 10px 10px;
+    margin: 80px 10px 10px;
     max-width: calc(100% - 20px);
   }
 }

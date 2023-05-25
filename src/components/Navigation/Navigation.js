@@ -18,10 +18,11 @@ function Navigation() {
             <img src={accountLogo} alt="Логотип аккаунта" />
           </button>
         </Link>
+        <button className="navigation__account-burger">
+          {/* <img src={burgerIcon} alt="Кнопка открытия бургер-меню" /> */}
+        </button>
       </div>
-      {/* <button className="navigation__account-burger">
-        <img src={burgerIcon} alt="Кнопка открытия бургер-меню" />
-      </button> */}
+
     </nav>
 
   );

@@ -29,6 +29,10 @@
   opacity: 80%;
 }
 
+.navigation__links_account {
+  display: flex;
+}
+
 .navigation__account-button {
   display: flex;
   padding: 0;
@@ -68,9 +72,32 @@
 }
 
 @media screen and (max-width: 768px) {
-
-
   .navigation__account-burger {
     display: block;
+    width: 28px;
+    height: 23px;
+    padding: 0;
+    margin: 4px 0 0 0;
+    border: 0;
+    background-image: url(../../images/header__burger-icon.svg);
+    background-color: transparent;
+    transition: opacity 0.35s linear;
+    cursor: pointer;
+  }
+
+  .navigation__account-burger:hover {
+    opacity: 80%;
+  }
+
+  .navigation__link {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .navigation__account-burger {
+    width: 22px;
+    height: 21px;
+    background-size: cover;
   }
 }
