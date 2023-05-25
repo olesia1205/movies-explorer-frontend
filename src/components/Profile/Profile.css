@@ -130,7 +130,7 @@
 
   .profile__signout-button {
     margin: 16px 0 40px 0;
-    width: calc(100% - 20px);
+    width: 300px;
     font-size: 12px;
     line-height: 15px;
   }

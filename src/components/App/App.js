@@ -9,15 +9,22 @@ import Register from '../Register/Register';
 import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
+import Menu from '../Menu/Menu';
 import moviesArray from '../../constants/moviesArray';
 import { savedMoviesArray } from '../../constants/savedMoviesArray';
 
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
-  // const [loggedIn, setLoggedIn] = useState(false);
+  const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [ movies, setMovies ] = useState(moviesArray);
   const [ savedMovies, setSavedMovies ] = useState(savedMoviesArray);
+
+  const closeAllPopups = () => {
+    setIsMenuPopupOpen(false);
+  }
+
+  const handleMenuPopupClick = () => setIsMenuPopupOpen(true);
 
   return (
     <div className="App">
@@ -40,6 +47,7 @@ function App() {
               <Header
                 loggedIn={loggedIn}
                 headerClass={'header'}
+                onMenuPopup={handleMenuPopupClick}
               />
               <Movies
                 movies={movies}
@@ -55,6 +63,7 @@ function App() {
               <Header
                 loggedIn={loggedIn}
                 headerClass={'header'}
+                onMenuPopup={handleMenuPopupClick}
               />
               <SavedMovies
                 movies={savedMovies}
@@ -70,6 +79,7 @@ function App() {
               <Header
                 loggedIn={loggedIn}
                 headerClass={'header'}
+                onMenuPopup={handleMenuPopupClick}
               />
               <Profile />
             </>
@@ -91,6 +101,11 @@ function App() {
           }
         />
       </Routes>
+
+      <Menu
+        isOpen={isMenuPopupOpen}
+        onClose={closeAllPopups}
+      />
     </div>
   );
 }

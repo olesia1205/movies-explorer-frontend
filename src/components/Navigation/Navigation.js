@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import  accountLogo from '../../images/account__logo.svg';
-// import burgerIcon from '../../images/header__burger-icon.svg';
 
-function Navigation() {
+function Navigation({ onMenuPopup }) {
   return (
     <nav className="navigation">
       <div className="navigation__links_movies">
@@ -18,9 +17,7 @@ function Navigation() {
             <img src={accountLogo} alt="Логотип аккаунта" />
           </button>
         </Link>
-        <button className="navigation__account-burger">
-          {/* <img src={burgerIcon} alt="Кнопка открытия бургер-меню" /> */}
-        </button>
+        <button className="navigation__account-burger" onClick={onMenuPopup}/>
       </div>
 
     </nav>

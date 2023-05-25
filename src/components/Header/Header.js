@@ -3,7 +3,7 @@ import headerLogo from '../../images/logo__main-1.svg';
 import Navigation from '../Navigation/Navigation';
 import { Link } from 'react-router-dom';
 
-function Header({ loggedIn, headerClass }) {
+function Header({ loggedIn, headerClass, onMenuPopup }) {
   return (
     <header className={headerClass}>
       <Link className="header__logo-link" to="/">
@@ -11,7 +11,9 @@ function Header({ loggedIn, headerClass }) {
       </Link>
       {loggedIn ? (
         <div className="header__navigation">
-          <Navigation/>
+          <Navigation
+            onMenuPopup={onMenuPopup}
+          />
         </div>
       ) : (
         <div className="header__button-block">

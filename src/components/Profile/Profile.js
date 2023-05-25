@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Profile() {
   return (
@@ -15,8 +16,10 @@ function Profile() {
         </label>
       </fieldset>
       <div className="profile__buttons-block">
-        <button className="profile__edit-button">Редактировать</button>
-        <button className="profile__signout-button">Выйти из аккаунта</button>
+        <button className="profile__edit-button" type="submit">Редактировать</button>
+        <Link to="/">
+          <button className="profile__signout-button">Выйти из аккаунта</button>
+        </Link>
       </div>
     </form>
   );
