@@ -8,3 +8,5 @@ const [loggedIn, setLoggedIn] = useState(true);
 ## Ссылки на проект
 
 Ссылка на пул реквест:
+
+Ссылка на макет: https://disk.yandex.ru/d/4_gDGGuUR5HCyg
