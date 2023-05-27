@@ -18,7 +18,7 @@ import { savedMoviesArray } from '../../constants/savedMoviesArray';
 
 function App() {
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [ movies, setMovies ] = useState(moviesArray);
   const [ savedMovies, setSavedMovies ] = useState(savedMoviesArray);
   // const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
