@@ -2,19 +2,18 @@ import React from 'react';
 
 function FilterCheckbox() {
   return (
-    <label className="searchform__checkbox-label">
-      <div className="searchform__checkbox-container">
-        <div className="searchform__checkbox">
+    <label className="filtercheckbox">
+      <div className="filtercheckbox__checkbox-container">
+        <div className="filtercheckbox__checkbox">
           <input
             type="checkbox"
-            className="searchform__checkbox_invisible"
+            className="filtercheckbox__checkbox-invisible"
           />
-          <span className="searchform__checkbox_visible" />
+          <span className="filtercheckbox__checkbox-visible" />
         </div>
       </div>
       Короткометражки
     </label>
-
   );
 }
 

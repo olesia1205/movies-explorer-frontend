@@ -1,17 +1,17 @@
-.movies__section {
+.movies-section {
   margin: 80px auto 10px auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 37px 24px;
 }
 
-.movies__section-more {
+.more-section {
   margin: 50px 0 0 0;
   display: flex;
   justify-content: center;
 }
 
-.movies__more-button {
+.more-section__button {
   padding: 11px 0 9px 0;
   margin: 0 0 71px 0;
   border: none;
@@ -26,12 +26,12 @@
   cursor: pointer;
 }
 
-.movies__more-button:hover {
+.more-section__button:hover {
   opacity: 80%;
 }
 
 @media screen and (max-width: 980px) {
-  .movies__section {
+  .movies-section {
     margin: 80px auto 30px auto;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
@@ -39,7 +39,7 @@
 }
 
 @media screen and (max-width: 680px) {
-  .movies__section {
+  .movies-section {
     margin: 50px auto 26px auto;
     grid-template-columns: 1fr;
     row-gap: 14px

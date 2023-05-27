@@ -1,8 +1,20 @@
-.aboutMe__container {
+.aboutMe {
   display: flex;
   flex-direction: column;
   margin: 210px auto 0 auto;
   max-width: calc(100% - 140px);
+}
+
+.aboutMe__subtitle {
+  margin: 0;
+  padding: 0 0 23px 0;
+  border-bottom: 1px solid #000000;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 22px;
+  line-height: 27px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -0.04em;
 }
 
 .aboutMe__section {
@@ -71,7 +83,7 @@
 }
 
 @media screen and (max-width: 900px) {
-  .aboutMe__container {
+  .aboutMe {
     margin: 180px auto 0 auto;
     max-width: calc(100% - 100px);
   }
@@ -107,9 +119,15 @@
 }
 
 @media screen and (max-width: 550px) {
-  .aboutMe__container {
+  .aboutMe {
     margin: 140px auto 0 auto;
     max-width: calc(100% - 28px);
+  }
+
+  .aboutMe__subtitle {
+    padding: 0 0 28px 0;
+    font-size: 18px;
+    line-height: 22px;
   }
 
   .aboutMe__section {

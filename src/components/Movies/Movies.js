@@ -4,13 +4,13 @@ import MoviesCardList from './MoviesCardList/MoviesCardList';
 
 function Movies({ movies, isOwner }) {
   return (
-    <div className="movies__container">
+    <main className="movies">
       <SearchForm />
       <MoviesCardList
         movies={movies}
         isOwner={isOwner}
       />
-    </div>
+    </main>
   );
 }
 

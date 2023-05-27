@@ -10,21 +10,33 @@ import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Menu from '../Menu/Menu';
+// import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import moviesArray from '../../constants/moviesArray';
 import { savedMoviesArray } from '../../constants/savedMoviesArray';
-
+// import successImage from '../../images/Success.svg';
+// import failImage from '../../images/Fail.svg';
 
 function App() {
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [ movies, setMovies ] = useState(moviesArray);
   const [ savedMovies, setSavedMovies ] = useState(savedMoviesArray);
+  // const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
+  // const [infoTooltiptext, setInfoTooltiptext] = useState('');
+  // const [registered, setRegistered] = useState(false);
 
   const closeAllPopups = () => {
     setIsMenuPopupOpen(false);
+    // setInfoTooltipPopupOpen(false);
   }
 
   const handleMenuPopupClick = () => setIsMenuPopupOpen(true);
+
+  function handleOverlayClick (evt) {
+    if (evt.target === evt.currentTarget) {
+      closeAllPopups();
+    }
+  }
 
   return (
     <div className="App">
@@ -34,7 +46,7 @@ function App() {
             <>
               <Header
                 loggedIn={loggedIn}
-                headerClass={'header__unlogged'}
+                headerClass={'header header-unlogged'}
               />
               <Main />
               <Footer />
@@ -105,7 +117,16 @@ function App() {
       <Menu
         isOpen={isMenuPopupOpen}
         onClose={closeAllPopups}
+        onOverlayClick={handleOverlayClick}
       />
+
+      {/* <InfoTooltip
+        isOpen={isInfoTooltipPopupOpen}
+        title={infoTooltiptext}
+        onClose={closeAllPopups}
+        onOverlayClick={handleOverlayClick}
+        image={registered ? successImage : failImage}
+      /> */}
     </div>
   );
 }

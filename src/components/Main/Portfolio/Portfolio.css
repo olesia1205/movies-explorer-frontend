@@ -1,4 +1,4 @@
-.portfolio__container {
+.portfolio {
   display: flex;
   flex-direction: column;
   margin: 100px auto 0 auto;
@@ -66,7 +66,7 @@
 }
 
 @media screen and (max-width: 900px) {
-  .portfolio__container {
+  .portfolio {
     margin: 90px auto 0 auto;
     max-width: calc(100% - 100px);
   }
@@ -82,7 +82,7 @@
 }
 
 @media screen and (max-width: 550px) {
-  .portfolio__container {
+  .portfolio {
     margin: 70px auto 0 auto;
     max-width: calc(100% - 28px);
   }

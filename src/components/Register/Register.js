@@ -4,7 +4,7 @@ import headerLogo from '../../images/logo__main-1.svg';
 
 function Register() {
   return (
-    <div className="register__container">
+    <div className="register">
       <section className="register__section" aria-label="Секция регистрации">
         <>
           <Link className="register__logo-link" to="/">

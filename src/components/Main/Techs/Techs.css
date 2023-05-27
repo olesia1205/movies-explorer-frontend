@@ -1,8 +1,20 @@
-.techs__container {
+.techs {
   display: flex;
   flex-direction: column;
   margin: 210px auto 0 auto;
   max-width: calc(100% - 140px);
+}
+
+.techs__subtitle {
+  margin: 0;
+  padding: 0 0 23px 0;
+  border-bottom: 1px solid #000000;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 22px;
+  line-height: 27px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -0.04em;
 }
 
 .techs__section {
@@ -59,7 +71,7 @@
 }
 
 @media screen and (max-width: 900px) {
-  .techs__container {
+  .techs {
     margin: 180px auto 0 auto;
     max-width: calc(100% - 100px);
   }
@@ -96,9 +108,15 @@
 }
 
 @media screen and (max-width: 550px) {
-  .techs__container {
+  .techs {
     margin: 128px auto 0 auto;
     max-width: calc(100% - 36px);
+  }
+
+  .techs__subtitle {
+    padding: 0 0 28px 0;
+    font-size: 18px;
+    line-height: 22px;
   }
 
   .techs__section {

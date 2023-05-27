@@ -2,8 +2,8 @@ import React from 'react';
 
 function Techs() {
   return (
-    <div className="techs__container">
-      <h2 className="aboutProject__subtitle">Технологии</h2>
+    <section className="techs" aria-label="Секция о технологиях">
+      <h2 className="techs__subtitle">Технологии</h2>
       <section className="techs__section" aria-label="О технологиях в дипломе">
         <h3 className="techs__section-subtitle">7 технологий</h3>
         <p className="techs__section-text">На курсе веб-разработки мы освоили
@@ -18,7 +18,7 @@ function Techs() {
         <p className="techs__block">Express.js</p>
         <p className="techs__block">mongoDB</p>
       </section>
-    </div>
+    </section>
   );
 }
 

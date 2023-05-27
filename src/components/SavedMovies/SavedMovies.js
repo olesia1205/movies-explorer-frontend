@@ -4,7 +4,7 @@ import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 
 function SavedMovies({movies, isOwner}) {
   return (
-    <div className="movies__container">
+    <main className="saved-movies">
       <SearchForm />
       <MoviesCardList
         movies={movies}
@@ -12,10 +12,10 @@ function SavedMovies({movies, isOwner}) {
       />
       {
         (
-          <section className="movies__saveddevider" aria-label="Секция отделяющая карточки от Footer" />
+          <section className="saved-movies__saveddevider" aria-label="Секция отделяющая карточки от Footer" />
         )
       }
-    </div>
+    </main>
   );
 }
 

@@ -3,8 +3,8 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 function SearchForm() {
   return (
-    <section className="searchform__container" aria-label="Форма поиска">
-      <form className="searchform__form" noValidate>
+    <section className="searchform" aria-label="Форма поиска">
+      <form className="searchform__form">
         <div className="searchform__input-block">
           <input
             className="searchform__input"

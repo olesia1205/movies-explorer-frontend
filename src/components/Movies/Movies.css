@@ -1,4 +1,4 @@
-.movies__container {
+.movies {
   display: flex;
   flex-direction: column;
   margin: 70px 70px 10px;
@@ -6,7 +6,7 @@
 }
 
 @media screen and (max-width: 900px) {
-  .movies__container {
+  .movies {
     margin: 80px 30px 10px;
     max-width: calc(100% - 60px);
   }
@@ -14,7 +14,7 @@
 }
 
 @media screen and (max-width: 680px) {
-  .movies__container {
+  .movies {
     margin: 80px 10px 10px;
     max-width: calc(100% - 20px);
   }

@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import  accountLogo from '../../images/account__logo.svg';
 
-function Menu({ isOpen, onClose }) {
+function Menu({ isOpen, onClose, onOverlayClick }) {
   return (
-    <div className={`popup__menu  ${isOpen ? 'popup__menu_is-opened' : ''}`}>
-      <div className="popup__menu-container">
+    <div className={`menu  ${isOpen ? 'menu_is-opened' : ''}`} onClick={onOverlayClick} >
+      <div className="menu__container">
         <button className="menu__close-button" type="button" onClick={onClose} />
         <div className="menu__links">
           <>
@@ -20,7 +20,7 @@ function Menu({ isOpen, onClose }) {
             </button>
           </>
         </div>
-        <button className="menu__link_account" type="button" onClick={onClose}>
+        <button className="menu__account" type="button" onClick={onClose}>
           <Link className="menu__account-button" to="/profile">Аккаунт
             <button className="menu__account-logo" >
               <img src={accountLogo} alt="Логотип аккаунта" />

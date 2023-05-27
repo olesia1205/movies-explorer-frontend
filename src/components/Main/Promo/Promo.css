@@ -1,4 +1,4 @@
-.promo__container {
+.promo {
   display: flex;
   padding: 75px 70px 84px;
   background-color: #F3C1F8;
@@ -41,7 +41,7 @@
     padding: 65px 0 48px;
   }
 
-  .promo__container {
+  .promo {
     padding: 75px 70px 92px;
     flex-direction: column-reverse;
     align-items: center;
@@ -65,7 +65,7 @@
 }
 
 @media screen and (max-width: 470px) {
-  .promo__container {
+  .promo {
     padding: 70px 10px 80px;
   }
 

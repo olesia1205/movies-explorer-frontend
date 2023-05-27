@@ -1,4 +1,4 @@
-.footer__container {
+.footer {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -66,13 +66,13 @@
 }
 
 @media screen and (max-width: 900px) {
-  .footer__container {
+  .footer {
     max-width: calc(100% - 60px);
   }
 }
 
 @media screen and (max-width: 550px) {
-  .footer__container {
+  .footer {
     max-width: calc(100% - 20px);
   }
 

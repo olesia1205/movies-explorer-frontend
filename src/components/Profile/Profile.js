@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Profile() {
   return (
-    <form className="profile__form">
+    <form className="profile">
       <h2 className="profile__title">Привет, Виталий!</h2>
       <fieldset className="profile__inputs-block">
         <label className="profile__label">

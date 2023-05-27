@@ -1,4 +1,4 @@
-.aboutProject__container {
+.aboutProject {
   display: flex;
   flex-direction: column;
   margin: 110px auto 0 auto;
@@ -52,7 +52,7 @@
   font-weight: 400;
 }
 
-.aboutProject__text_timing {
+.aboutProject__timing {
   margin: 0;
   padding: 9px 0;
   color: #FFFFFF;
@@ -66,20 +66,36 @@
   font-weight: 400;
 }
 
-.aboutProject__text {
+.aboutProject__timing-colored {
+  margin: 0;
+  padding: 9px 0;
+  text-align: center;
+  background-color: #F2F2F2;
+  width: 100%;
+  color: #000000;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.aboutProject__text-caption {
+  margin: 0;
   padding: 14px 0 0 0;
   background-color: #FFFFFF;
   color: #A0A0A0;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  font-style: normal;
   font-weight: 500;
 }
 
-.aboutProject__text_timing-white {
-  background-color: #FFFFFF;
-  color: #000000;
-}
+
 
 @media screen and (max-width: 900px) {
-  .aboutProject__container {
+  .aboutProject {
     margin: 91px auto;
     max-width: calc(100% - 100px);
   }
@@ -98,13 +114,13 @@
     line-height: 18px;
   }
 
-  .aboutProject__text_timing {
+  .aboutProject__timing {
     max-width: 140px;
   }
 }
 
 @media screen and (max-width: 550px) {
-  .aboutProject__container {
+  .aboutProject {
     margin: 70px auto;
     max-width: calc(100% - 36px);
   }
@@ -135,8 +151,20 @@
     margin: 0;
   }
 
-  .aboutProject__text_timing {
+  .aboutProject__timing {
     max-width: 100px;
+    font-size: 11px;
+    line-height: 13px;
+    padding: 11px 0;
+  }
+
+  .aboutProject__timing-colored {
+    font-size: 11px;
+    line-height: 13px;
+    padding: 11px 0;
+  }
+
+  .aboutProject__text-caption {
     font-size: 11px;
     line-height: 13px;
     padding: 11px 0;
