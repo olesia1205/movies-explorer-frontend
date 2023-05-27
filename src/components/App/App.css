@@ -1,0 +1,9 @@
+.App {
+  max-width: 1280px;
+  margin: 0 auto;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  background-color: #FFFFFF;
+  -webkit-font-smooting: antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
