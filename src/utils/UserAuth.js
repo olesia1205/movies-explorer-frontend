@@ -21,7 +21,7 @@ class UserAuth {
     return fetch(`${this._url}/signin`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify({email, password})
+      body: JSON.stringify({ email, password })
     })
     .then(this._getResponse)
   }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -65,17 +65,15 @@ function App() {
     if (jwt) {
       userAuth.getContent(jwt)
       .then((response) => {
-        // console.log(response);
         setLoggedIn(true);
         setUserData({
           email: response.email,
           name: response.name
         });
-        navigate ('/movies');
       })
       .catch(err => console.log(err))
     }
-  }, [navigate]);
+  }, []);
 
   function handleRegister({ email, password, name }) {
     setIsLoading(true);
@@ -86,6 +84,30 @@ function App() {
       setInfoTooltiptext('Вы успешно зарегистрировались!');
       setInfoTooltipPopupOpen(true);
       navigate('/signin');
+    })
+    .catch((error) => {
+      setRegistered(false);
+      setInfoTooltiptext('Что-то пошло не так! Попробуйте ещё раз.');
+      setInfoTooltipPopupOpen(true);
+      console.log(error);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    })
+  }
+
+  function handleLogin({ email, password }) {
+    setIsLoading(true);
+
+    userAuth.authorize({ email, password })
+    .then((response) => {
+      localStorage.setItem('jwt', response.token);
+      setLoggedIn(true);
+      setUserData({
+        email: response.email,
+        name: response.name
+      });
+      navigate('/movies');
     })
     .catch((error) => {
       setRegistered(false);
@@ -167,7 +189,10 @@ function App() {
         />
         <Route path='/signin'
           element={
-            <Login />
+            <Login
+              onLoginUserData={handleLogin}
+              isLoading={isLoading}
+            />
           }
         />
         <Route path='*'
