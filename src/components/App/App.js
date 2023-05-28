@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -10,24 +10,33 @@ import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Menu from '../Menu/Menu';
-// import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import mainApi from '../../utils/MainApi';
+import userAuth from '../../utils/UserAuth';
 import moviesArray from '../../constants/moviesArray';
 import { savedMoviesArray } from '../../constants/savedMoviesArray';
-// import successImage from '../../images/Success.svg';
-// import failImage from '../../images/Fail.svg';
+import successImage from '../../images/Success.svg';
+import failImage from '../../images/Fail.svg';
 
 function App() {
+  const navigate = useNavigate();
+
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [ movies, setMovies ] = useState(moviesArray);
-  const [ savedMovies, setSavedMovies ] = useState(savedMoviesArray);
-  // const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
-  // const [infoTooltiptext, setInfoTooltiptext] = useState('');
-  // const [registered, setRegistered] = useState(false);
+  const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
+  const [infoTooltiptext, setInfoTooltiptext] = useState('');
+  const [registered, setRegistered] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [movies, setMovies] = useState(moviesArray);
+  const [savedMovies, setSavedMovies] = useState(savedMoviesArray);
+  const [userData, setUserData] =useState({
+    email: '',
+    name: ''
+  })
 
   const closeAllPopups = () => {
     setIsMenuPopupOpen(false);
-    // setInfoTooltipPopupOpen(false);
+    setInfoTooltipPopupOpen(false);
   }
 
   const handleMenuPopupClick = () => setIsMenuPopupOpen(true);
@@ -36,6 +45,57 @@ function App() {
     if (evt.target === evt.currentTarget) {
       closeAllPopups();
     }
+  }
+
+  // useEffect(() => {
+  //   mainApi.getToken();
+  //   if(loggedIn) {
+  //     mainApi.getAllNeededData()
+  //     .then(([dataForUserInfo, dataForInitialCards]) => {
+  //       // console.log([dataForUserInfo, dataForInitialCards]);
+  //       setCurrentUser(dataForUserInfo);
+  //       setCards(dataForInitialCards);
+  //     })
+  //     .catch(err => console.log(err))
+  //   }
+  // }, [loggedIn]);
+
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      userAuth.getContent(jwt)
+      .then((response) => {
+        // console.log(response);
+        setLoggedIn(true);
+        setUserData({
+          email: response.email,
+          name: response.name
+        });
+        navigate ('/movies');
+      })
+      .catch(err => console.log(err))
+    }
+  }, [navigate]);
+
+  function handleRegister({ email, password, name }) {
+    setIsLoading(true);
+
+    userAuth.register({ email, password, name })
+    .then(() => {
+      setRegistered(true);
+      setInfoTooltiptext('Вы успешно зарегистрировались!');
+      setInfoTooltipPopupOpen(true);
+      navigate('/signin');
+    })
+    .catch((error) => {
+      setRegistered(false);
+      setInfoTooltiptext('Что-то пошло не так! Попробуйте ещё раз.');
+      setInfoTooltipPopupOpen(true);
+      console.log(error);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    })
   }
 
   return (
@@ -99,7 +159,10 @@ function App() {
         />
         <Route path='/signup'
           element={
-            <Register />
+            <Register
+              onRegisterUserData={handleRegister}
+              isLoading={isLoading}
+            />
           }
         />
         <Route path='/signin'
@@ -120,13 +183,13 @@ function App() {
         onOverlayClick={handleOverlayClick}
       />
 
-      {/* <InfoTooltip
+      <InfoTooltip
         isOpen={isInfoTooltipPopupOpen}
         title={infoTooltiptext}
         onClose={closeAllPopups}
         onOverlayClick={handleOverlayClick}
         image={registered ? successImage : failImage}
-      /> */}
+      />
     </div>
   );
 }
