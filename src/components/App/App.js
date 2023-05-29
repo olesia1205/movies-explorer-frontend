@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -12,7 +13,9 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 import Menu from '../Menu/Menu';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import mainApi from '../../utils/MainApi';
+import moviesApi from '../../utils/MoviesApi';
 import userAuth from '../../utils/UserAuth';
+import { CurrentUserContext} from '../../contexts/CurrentUserContext';
 import moviesArray from '../../constants/moviesArray';
 import { savedMoviesArray } from '../../constants/savedMoviesArray';
 import successImage from '../../images/Success.svg';
@@ -27,6 +30,7 @@ function App() {
   const [infoTooltiptext, setInfoTooltiptext] = useState('');
   const [registered, setRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState(moviesArray);
   const [savedMovies, setSavedMovies] = useState(savedMoviesArray);
   const [userData, setUserData] =useState({
@@ -73,7 +77,7 @@ function App() {
       })
       .catch(err => console.log(err))
     }
-  }, []);
+  }, [navigate]);
 
   function handleRegister({ email, password, name }) {
     setIsLoading(true);
@@ -122,99 +126,118 @@ function App() {
 
   return (
     <div className="App">
-      <Routes>
-        <Route exact path='/'
-          element={
-            <>
-              <Header
-                loggedIn={loggedIn}
-                headerClass={'header header-unlogged'}
+      <CurrentUserContext.Provider value={currentUser}>
+        <Routes>
+          <Route exact path='/'
+            element={
+              <>
+                <Header
+                  loggedIn={loggedIn}
+                  headerClass={'header header-unlogged'}
+                />
+                <Main />
+                <Footer />
+              </>
+            }
+          />
+          <Route path='/movies'
+            element={
+              <>
+                <ProtectedRoute
+                  loggedIn={loggedIn}
+                  component={Header}
+                  headerClass={'header'}
+                  onMenuPopup={handleMenuPopupClick}
+                />
+                <ProtectedRoute
+                  loggedIn={loggedIn}
+                  component={Movies}
+                    movies={movies}
+                    isOwner={false}
+                />
+                <ProtectedRoute
+                  loggedIn={loggedIn}
+                  component={Footer}
+                />
+              </>
+            }
+          />
+          <Route path='/saved-movies'
+            element={
+              <>
+                <ProtectedRoute
+                  loggedIn={loggedIn}
+                  component={Header}
+                  headerClass={'header'}
+                  onMenuPopup={handleMenuPopupClick}
+                />
+                <ProtectedRoute
+                  loggedIn={loggedIn}
+                  component={SavedMovies}
+                    movies={savedMovies}
+                    isOwner={true}
+                />
+                <ProtectedRoute
+                  loggedIn={loggedIn}
+                  component={Footer}
+                />
+              </>
+            }
+          />
+          <Route path='/profile'
+            element={
+              <>
+                <ProtectedRoute
+                  loggedIn={loggedIn}
+                  component={Header}
+                  headerClass={'header'}
+                  onMenuPopup={handleMenuPopupClick}
+                />
+                <ProtectedRoute
+                  loggedIn={loggedIn}
+                  component={Profile}
+                    userData={userData}
+                />
+              </>
+            }
+          />
+          <Route path='/signup'
+            element={
+              <Register
+                onRegisterUserData={handleRegister}
+                isLoading={isLoading}
               />
-              <Main />
-              <Footer />
-            </>
-          }
-        />
-        <Route path='/movies'
-          element={
-            <>
-              <Header
-                loggedIn={loggedIn}
-                headerClass={'header'}
-                onMenuPopup={handleMenuPopupClick}
+            }
+          />
+          <Route path='/signin'
+            element={
+              <Login
+                onLoginUserData={handleLogin}
+                isLoading={isLoading}
               />
-              <Movies
-                movies={movies}
-                isOwner={false}
-              />
-              <Footer />
-            </>
-          }
-        />
-        <Route path='/saved-movies'
-          element={
-            <>
-              <Header
-                loggedIn={loggedIn}
-                headerClass={'header'}
-                onMenuPopup={handleMenuPopupClick}
-              />
-              <SavedMovies
-                movies={savedMovies}
-                isOwner={true}
-              />
-              <Footer />
-            </>
-          }
-        />
-        <Route path='/profile'
-          element={
-            <>
-              <Header
-                loggedIn={loggedIn}
-                headerClass={'header'}
-                onMenuPopup={handleMenuPopupClick}
-              />
-              <Profile />
-            </>
-          }
-        />
-        <Route path='/signup'
-          element={
-            <Register
-              onRegisterUserData={handleRegister}
-              isLoading={isLoading}
-            />
-          }
-        />
-        <Route path='/signin'
-          element={
-            <Login
-              onLoginUserData={handleLogin}
-              isLoading={isLoading}
-            />
-          }
-        />
-        <Route path='*'
-          element={
-            <PageNotFound/>
-          }
-        />
-      </Routes>
+            }
+          />
+          <Route path='*'
+            element={
+              <PageNotFound/>
+            }
+          />
+        </Routes>
 
-      <Menu
-        isOpen={isMenuPopupOpen}
-        onClose={closeAllPopups}
-        onOverlayClick={handleOverlayClick}
-      />
+        <Menu
+          isOpen={isMenuPopupOpen}
+          onClose={closeAllPopups}
+          onOverlayClick={handleOverlayClick}
+        />
 
-      <InfoTooltip
-        isOpen={isInfoTooltipPopupOpen}
-        title={infoTooltiptext}
-        onClose={closeAllPopups}
-        onOverlayClick={handleOverlayClick}
-        image={registered ? successImage : failImage}
-      />
+        <InfoTooltip
+          isOpen={isInfoTooltipPopupOpen}
+          title={infoTooltiptext}
+          onClose={closeAllPopups}
+          onOverlayClick={handleOverlayClick}
+          image={registered ? successImage : failImage}
+        />
+      </CurrentUserContext.Provider>
     </div>
   );
 }

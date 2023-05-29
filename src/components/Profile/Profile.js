@@ -1,18 +1,40 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Profile() {
+function Profile({ userData }) {
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    // props.onUpdateUser({
+    //   name: values.name,
+    //   about: values.about
+    // });
+  }
+
   return (
-    <form className="profile">
-      <h2 className="profile__title">Привет, Виталий!</h2>
+    <form className="profile" onSubmit={handleSubmit}>
+      <h2 className="profile__title">Привет, {userData.name}!</h2>
       <fieldset className="profile__inputs-block">
         <label className="profile__label">
           <p className="profile__placeholder">Имя</p>
-          <input className="profile__input profile__input-name" type="text" placeholder="Виталий" required minLength="2"/>
+          <input
+            className="profile__input profile__input-name"
+            type="text"
+            name="name"
+            placeholder="Ваше имя"
+            // value={values.name || ''}
+            required minLength="2"
+            maxLength="30"
+          />
         </label>
         <label className="profile__label">
           <p className="profile__placeholder">E-mail</p>
-          <input className="profile__input profile__input-email" type="email" placeholder="pochta@yandex.ru" required minLength="2"/>
+          <input
+            className="profile__input profile__input-email"
+            type="email"
+            placeholder="Email"
+            required
+          />
         </label>
       </fieldset>
       <div className="profile__buttons-block">
