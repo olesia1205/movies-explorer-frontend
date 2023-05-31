@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Header from '../Header/Header';
@@ -46,11 +46,21 @@ function App() {
 
   const handleMenuPopupClick = () => setIsMenuPopupOpen(true);
 
+  const resetErrorMessage = useCallback((clearErrorMessage='') => {
+    setErrorMessage(clearErrorMessage)
+  }, [setErrorMessage])
+
+  useEffect(() => {
+    resetErrorMessage();
+  }, [resetErrorMessage, navigate]);
+
   function handleOverlayClick (evt) {
     if (evt.target === evt.currentTarget) {
       closeAllPopups();
     }
   }
+
+
 
   // useEffect(() => {
   //   mainApi.getToken();
@@ -85,10 +95,7 @@ function App() {
 
     userAuth.register({ email, password, name })
     .then(() => {
-      setRegistered(true);
-      setInfoTooltiptext('Вы успешно зарегистрировались!');
-      setInfoTooltipPopupOpen(true);
-      navigate('/signin');
+      handleLogin({email, password});
     })
     .catch((error) => {
       setRegistered(false);
@@ -118,12 +125,16 @@ function App() {
       setRegistered(false);
       setInfoTooltiptext('Что-то пошло не так! Попробуйте ещё раз.');
       setInfoTooltipPopupOpen(true);
-      console.log(error);
+      setErrorMessage(error.message);
     })
     .finally(() => {
       setIsLoading(false);
     })
   }
+
+  // function clearInfo() {
+  //   setErrorMessage('');
+  // }
 
   function handleSignOut() {
     localStorage.removeItem('jwt');
@@ -237,6 +248,7 @@ function App() {
               <Login
                 onLoginUserData={handleLogin}
                 isLoading={isLoading}
+                errorMessage={errorMessage}
               />
             }
           />

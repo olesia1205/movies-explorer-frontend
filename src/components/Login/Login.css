@@ -26,6 +26,7 @@
 
 .login__buttons-block {
   margin: 200px 0 0 0;
+  width: 100%;
 }
 
 @media screen and (max-width: 500px) {

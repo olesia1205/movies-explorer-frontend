@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import headerLogo from '../../images/logo__main-1.svg';
 import Preloader from '../Preloader/Preloader';
