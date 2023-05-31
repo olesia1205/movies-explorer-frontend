@@ -5,7 +5,16 @@ class UserAuth {
   }
 
   _getResponse(response) {
-    return response.ok ? response.json() : Promise.reject(`Ошибка: ${response.status}`);
+    if (response.ok) {
+      return(response.json());
+    } else {
+      return(response.json())
+        .then((err) => {
+          const error = new Error(err.message);
+          error.status = response.status;
+          throw error;
+        })
+    }
   }
 
   register({ email, password, name }) {

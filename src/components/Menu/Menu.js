@@ -20,13 +20,13 @@ function Menu({ isOpen, onClose, onOverlayClick }) {
             </button>
           </>
         </div>
-        <button className="menu__account" type="button" onClick={onClose}>
-          <Link className="menu__account-button" to="/profile">Аккаунт
+        <div className="menu__account">
+          <Link className="menu__account-button" to="/profile" onClick={onClose}>Аккаунт
             <button className="menu__account-logo" >
               <img src={accountLogo} alt="Логотип аккаунта" />
             </button>
           </Link>
-        </button>
+        </div>
       </div>
     </div>
   );

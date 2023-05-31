@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Profile({ userData }) {
+function Profile({ userData, signOut }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -40,7 +40,7 @@ function Profile({ userData }) {
       <div className="profile__buttons-block">
         <button className="profile__edit-button" type="submit">Редактировать</button>
         <Link to="/">
-          <button className="profile__signout-button">Выйти из аккаунта</button>
+          <button className="profile__signout-button" onClick={signOut}>Выйти из аккаунта</button>
         </Link>
       </div>
     </form>

@@ -16,7 +16,7 @@ import mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
 import userAuth from '../../utils/UserAuth';
 import { CurrentUserContext} from '../../contexts/CurrentUserContext';
-import moviesArray from '../../constants/moviesArray';
+// import moviesArray from '../../constants/moviesArray';
 import { savedMoviesArray } from '../../constants/savedMoviesArray';
 import successImage from '../../images/Success.svg';
 import failImage from '../../images/Fail.svg';
@@ -27,11 +27,12 @@ function App() {
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
-  const [infoTooltiptext, setInfoTooltiptext] = useState('');
   const [registered, setRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [infoTooltiptext, setInfoTooltiptext] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [currentUser, setCurrentUser] = useState({});
-  const [movies, setMovies] = useState(moviesArray);
+  const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState(savedMoviesArray);
   const [userData, setUserData] =useState({
     email: '',
@@ -77,7 +78,7 @@ function App() {
       })
       .catch(err => console.log(err))
     }
-  }, [navigate]);
+  }, []);
 
   function handleRegister({ email, password, name }) {
     setIsLoading(true);
@@ -93,7 +94,7 @@ function App() {
       setRegistered(false);
       setInfoTooltiptext('Что-то пошло не так! Попробуйте ещё раз.');
       setInfoTooltipPopupOpen(true);
-      console.log(error);
+      setErrorMessage(error.message);
     })
     .finally(() => {
       setIsLoading(false);
@@ -122,6 +123,25 @@ function App() {
     .finally(() => {
       setIsLoading(false);
     })
+  }
+
+  function handleSignOut() {
+    localStorage.removeItem('jwt');
+    setLoggedIn(false);
+    setUserData({
+      email: '',
+      name: ''
+    });
+    navigate('/');
+  }
+
+  function handleGetAllMovies() {
+    moviesApi.getAllMovies()
+      .then((dataForInitialMovies) => {
+        console.log(dataForInitialMovies);
+        setMovies(dataForInitialMovies);
+      })
+      .catch(err => console.log(err))
   }
 
   return (
@@ -154,6 +174,7 @@ function App() {
                   component={Movies}
                     movies={movies}
                     isOwner={false}
+                    handleSearch={handleGetAllMovies}
                 />
                 <ProtectedRoute
                   loggedIn={loggedIn}
@@ -197,6 +218,7 @@ function App() {
                   loggedIn={loggedIn}
                   component={Profile}
                     userData={userData}
+                    signOut={handleSignOut}
                 />
               </>
             }
@@ -206,6 +228,7 @@ function App() {
               <Register
                 onRegisterUserData={handleRegister}
                 isLoading={isLoading}
+                errorMessage={errorMessage}
               />
             }
           />

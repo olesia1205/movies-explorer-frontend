@@ -1,7 +1,8 @@
 import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({movies, isOwner}) {
+function MoviesCardList({ movies, isOwner }) {
+  const BASE_URL = "https://api.nomoreparties.co";
 
   return (
     <>
@@ -10,7 +11,17 @@ function MoviesCardList({movies, isOwner}) {
           movies?.map((movie) => {
             return (
               <MoviesCard
-                movie={movie}
+                country = {movie.country}
+                director = {movie.director}
+                duration = {movie.duration}
+                year = {movie.year}
+                description = {movie.description}
+                image = {`${BASE_URL}${movie.image.url}`}
+                trailerLink = {movie.trailerLink}
+                thumbnail = {`${BASE_URL}${movie.image.formats.thumbnail.url}`}
+                movieId = {movie.id}
+                nameRU = {movie.nameRU}
+                nameEN = {movie.nameEN}
                 key={movie.id}
               />
             )

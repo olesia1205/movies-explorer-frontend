@@ -1,29 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import headerLogo from '../../images/logo__main-1.svg';
 import Preloader from '../Preloader/Preloader';
+import useValidation from '../../utils/Validation';
 
 function Register({...props}) {
-  const [userData, setUserData] = useState({
-    email: '',
-    password: '',
-    name: ''
-  });
+  const { values, errors, handleChange, resetValidation, isValid } = useValidation();
 
-  function handleChange (evt) {
-    const {name, value} = evt.target;
-    setUserData({
-      ...userData,
-      [name]: value,
-    })
-  };
+  useEffect(() => {
+    resetValidation();
+  }, [resetValidation]);
 
   function handleSubmit (evt) {
     evt.preventDefault();
     props.onRegisterUserData({
-      email: userData.email,
-      password: userData.password,
-      name: userData.name
+      email: values.email,
+      password: values.password,
+      name: values.name
     })
   };
 
@@ -36,7 +29,7 @@ function Register({...props}) {
           </Link>
           <h2 className="register__title">Добро пожаловать!</h2>
         </>
-        <form className="register__form" onSubmit={handleSubmit}>
+        <form className="register__form" onSubmit={handleSubmit} noValidate>
           {props.isLoading ? <Preloader /> : ''}
           <fieldset className="register__inputs-block">
             <label className="register__label">
@@ -45,14 +38,15 @@ function Register({...props}) {
                 className="register__input register__input-name"
                 type="text"
                 name="name"
-                placeholder="Имя"
-                value={userData.name || ''}
+                placeholder="Ваше имя"
+                value={values.name || ''}
                 onChange={handleChange}
                 required
                 minLength="2"
                 maxLength="30"
+                pattern="^[A-Za-zА-Яа-яЁё\-\s]+$"
               />
-              <span className="register__input-error" id="name-error"></span>
+              <span className={`register__input-error ${!isValid && errors.name ? 'register__input-error_active' : ''}`} id="name-error" >{errors.name || ''}</span>
             </label>
             <label className="register__label">
               <p className="register__placeholder">E-mail</p>
@@ -60,13 +54,13 @@ function Register({...props}) {
                 className="register__input register__input-email"
                 type="email"
                 name="email"
-                placeholder="Email"
-                value={userData.email || ''}
+                placeholder="Ваш email"
+                value={values.email || ''}
                 onChange={handleChange}
                 required
-                minLength="2"
+                pattern="^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$"
               />
-              <span className="register__input-error" id="email-error"></span>
+              <span className={`register__input-error ${!isValid && errors.email ? 'register__input-error_active' : ''}`} id="email-error">{errors.email || ''}</span>
             </label>
             <label className="register__label">
               <p className="register__placeholder">Пароль</p>
@@ -74,16 +68,22 @@ function Register({...props}) {
               className="register__input register__input-password"
               type="password"
               name="password"
-              placeholder="Пароль"
-              value={userData.password || ''}
+              placeholder="Ваш пароль"
+              value={values.password || ''}
               onChange={handleChange}
               required
               />
-              <span className="register__input-error" id="password-error"></span>
+              <span className={`register__input-error ${!isValid && errors.password ? 'register__input-error_active' : ''}`} id="password-error">{errors.password || ''}</span>
             </label>
           </fieldset>
           <div className="register__buttons-block">
-            <button  className="register__submit-button" type="submit" name="submit-button" >Зарегистрироваться</button>
+            <p className="register__error">{props.errorMessage}</p>
+            <button
+              className={`register__submit-button ${!isValid && errors ? 'register__submit-button_disabled' : ''}`}
+              type="submit"
+              disabled={!isValid}
+            >Зарегистрироваться
+            </button>
             <div className="register__link-block">
               <p className="register__link register__link-text">Уже зарегистрированы?</p>
               <Link className="register__link" to="/signin">Войти</Link>

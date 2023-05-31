@@ -4,7 +4,7 @@ import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 
 function SavedMovies({movies, isOwner}) {
   return (
-    <main className="saved-movies">
+    <main className="movies saved-movies">
       <SearchForm />
       <MoviesCardList
         movies={movies}

@@ -7,10 +7,6 @@
   overflow: hidden;
   transition: opacity 0.35s linear;
   cursor: pointer;
-
-}
-
-.movie:hover {
   box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.08);
 }
 
