@@ -1,14 +1,20 @@
 class MainApi {
   constructor(config) {
     this._url = config.baseUrl;
-    this._headers = config._headers;
+    this._headers = config.headers;
   }
 
   _getResponseData(response) {
     if (response.ok) {
-      return response.json();
+      return(response.json());
+    } else {
+      return(response.json())
+        .then((err) => {
+          const error = new Error(err.message);
+          error.status = response.status;
+          throw error;
+        })
     }
-    return Promise.reject(`Ошибка: ${response.status}`);
   }
 
   getUserInfo() {
@@ -31,10 +37,7 @@ class MainApi {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({
-        email: data.email,
-        name: data.name
-      })
+      body: JSON.stringify(data)
     })
     .then(this._getResponseData);
   }

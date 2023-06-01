@@ -34,10 +34,19 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState(savedMoviesArray);
-  const [userData, setUserData] =useState({
-    email: '',
-    name: ''
-  })
+
+  useEffect(() => {
+    mainApi.getToken();
+    if(loggedIn) {
+      mainApi.getUserInfo()
+        .then((userInfo) => {
+          setCurrentUser(userInfo);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }, [loggedIn]);
 
   const closeAllPopups = () => {
     setIsMenuPopupOpen(false);
@@ -54,41 +63,20 @@ function App() {
     resetErrorMessage();
   }, [resetErrorMessage, navigate]);
 
-  function handleOverlayClick (evt) {
-    if (evt.target === evt.currentTarget) {
-      closeAllPopups();
-    }
-  }
-
-
-
-  // useEffect(() => {
-  //   mainApi.getToken();
-  //   if(loggedIn) {
-  //     mainApi.getAllNeededData()
-  //     .then(([dataForUserInfo, dataForInitialCards]) => {
-  //       // console.log([dataForUserInfo, dataForInitialCards]);
-  //       setCurrentUser(dataForUserInfo);
-  //       setCards(dataForInitialCards);
-  //     })
-  //     .catch(err => console.log(err))
-  //   }
-  // }, [loggedIn]);
-
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       userAuth.getContent(jwt)
       .then((response) => {
         setLoggedIn(true);
-        setUserData({
+        setCurrentUser({
           email: response.email,
           name: response.name
         });
       })
       .catch(err => console.log(err))
     }
-  }, []);
+  }, [navigate]);
 
   function handleRegister({ email, password, name }) {
     setIsLoading(true);
@@ -115,7 +103,7 @@ function App() {
     .then((response) => {
       localStorage.setItem('jwt', response.token);
       setLoggedIn(true);
-      setUserData({
+      setCurrentUser({
         email: response.email,
         name: response.name
       });
@@ -132,18 +120,31 @@ function App() {
     })
   }
 
-  // function clearInfo() {
-  //   setErrorMessage('');
-  // }
+  function handleUpdateUser({email, name}) {
+    setIsLoading(true);
+    mainApi.patchUserInfo({email, name})
+      .then(() => {
+        setCurrentUser({email, name});
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
+  }
 
   function handleSignOut() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
-    setUserData({
-      email: '',
-      name: ''
-    });
+    setCurrentUser({});
     navigate('/');
+  }
+
+  function handleOverlayClick (evt) {
+    if (evt.target === evt.currentTarget) {
+      closeAllPopups();
+    }
   }
 
   function handleGetAllMovies() {
@@ -228,8 +229,10 @@ function App() {
                 <ProtectedRoute
                   loggedIn={loggedIn}
                   component={Profile}
-                    userData={userData}
+                    onUpdateUserInfo={handleUpdateUser}
                     signOut={handleSignOut}
+                    isLoading={isLoading}
+                    errorMessage={errorMessage}
                 />
               </>
             }
