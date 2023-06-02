@@ -2,13 +2,12 @@ import React from 'react';
 import SearchForm from '../Movies/SearchForm/SearchForm';
 import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 
-function SavedMovies({movies, isOwner}) {
+function SavedMovies({movies}) {
   return (
     <main className="movies saved-movies">
       <SearchForm />
       <MoviesCardList
         movies={movies}
-        isOwner={isOwner}
       />
       {
         (

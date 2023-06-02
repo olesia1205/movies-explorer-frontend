@@ -1,7 +1,7 @@
 import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({ movies, isOwner }) {
+function MoviesCardList({ movies }) {
   const BASE_URL = "https://api.nomoreparties.co";
 
   return (
@@ -29,7 +29,7 @@ function MoviesCardList({ movies, isOwner }) {
         )}
       </section>
       {
-        (!isOwner &&
+        (
           <section className="more-section" aria-label="Секция с кнопкой еще">
              <button className="more-section__button">Ещё</button>
           </section>

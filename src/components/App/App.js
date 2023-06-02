@@ -16,7 +16,6 @@ import mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
 import userAuth from '../../utils/UserAuth';
 import { CurrentUserContext} from '../../contexts/CurrentUserContext';
-// import moviesArray from '../../constants/moviesArray';
 import { savedMoviesArray } from '../../constants/savedMoviesArray';
 import successImage from '../../images/Success.svg';
 import failImage from '../../images/Fail.svg';
@@ -32,8 +31,12 @@ function App() {
   const [infoTooltiptext, setInfoTooltiptext] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [currentUser, setCurrentUser] = useState({});
-  const [movies, setMovies] = useState([]);
+  const [initialMovies, setInitialMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState(savedMoviesArray);
+
+  useEffect(() => {
+    checkLocalStorage()
+  }, []);
 
   useEffect(() => {
     mainApi.getToken();
@@ -47,13 +50,6 @@ function App() {
         })
     }
   }, [loggedIn]);
-
-  const closeAllPopups = () => {
-    setIsMenuPopupOpen(false);
-    setInfoTooltipPopupOpen(false);
-  }
-
-  const handleMenuPopupClick = () => setIsMenuPopupOpen(true);
 
   const resetErrorMessage = useCallback((clearErrorMessage='') => {
     setErrorMessage(clearErrorMessage)
@@ -125,6 +121,7 @@ function App() {
     mainApi.patchUserInfo({email, name})
       .then(() => {
         setCurrentUser({email, name});
+        setErrorMessage('Данные успешно обновлены!')
       })
       .catch((error) => {
         setErrorMessage(error.message);
@@ -136,9 +133,15 @@ function App() {
 
   function handleSignOut() {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('lastFoundMovies');
     setLoggedIn(false);
     setCurrentUser({});
     navigate('/');
+  }
+
+  function closeAllPopups() {
+    setIsMenuPopupOpen(false);
+    setInfoTooltipPopupOpen(false);
   }
 
   function handleOverlayClick (evt) {
@@ -150,11 +153,28 @@ function App() {
   function handleGetAllMovies() {
     moviesApi.getAllMovies()
       .then((dataForInitialMovies) => {
-        console.log(dataForInitialMovies);
-        setMovies(dataForInitialMovies);
+        localStorage.setItem('allMovies', JSON.stringify(dataForInitialMovies));
+        setInitialMovies(dataForInitialMovies);
       })
       .catch(err => console.log(err))
   }
+
+  function checkLocalStorage() {
+    const allMovies = localStorage.getItem('allMovies');
+    if (allMovies) {
+      setInitialMovies(JSON.parse(allMovies))
+    } else {
+      handleGetAllMovies();
+    }
+  }
+
+  function filterMovies(moviesArray, keyword) {
+    return moviesArray.filter((movie) => {
+      return movie.nameRU.toLowerCase().includes(keyword);
+    })
+  }
+
+  const handleMenuPopupClick = () => setIsMenuPopupOpen(true);
 
   return (
     <div className="App">
@@ -182,11 +202,10 @@ function App() {
                   onMenuPopup={handleMenuPopupClick}
                 />
                 <ProtectedRoute
-                  loggedIn={loggedIn}
                   component={Movies}
-                    movies={movies}
-                    isOwner={false}
-                    handleSearch={handleGetAllMovies}
+                    loggedIn={loggedIn}
+                    initialMovies={initialMovies}
+                    handleSearch={filterMovies}
                 />
                 <ProtectedRoute
                   loggedIn={loggedIn}
@@ -208,7 +227,6 @@ function App() {
                   loggedIn={loggedIn}
                   component={SavedMovies}
                     movies={savedMovies}
-                    isOwner={true}
                 />
                 <ProtectedRoute
                   loggedIn={loggedIn}

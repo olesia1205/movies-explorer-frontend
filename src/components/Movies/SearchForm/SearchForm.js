@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import useValidation from '../../../utils/Validation';
 
-function SearchForm({ handleSearch }) {
+function SearchForm({ handleSearch, setIsCheckboxActive }) {
   const { values, errors, handleChange, resetValidation, isValid } = useValidation();
+  const keyword = values.movietitle;
 
   useEffect(() => {
     resetValidation();
@@ -11,7 +12,11 @@ function SearchForm({ handleSearch }) {
 
   function handleSearchFormClick(evt) {
     evt.preventDefault();
-    handleSearch();
+    handleSearch(keyword);
+  }
+
+  function handleCheckboxClick(value) {
+    setIsCheckboxActive(value);
   }
 
   return (
@@ -25,18 +30,17 @@ function SearchForm({ handleSearch }) {
             value={values.movietitle || ''}
             placeholder="Фильм"
             required
-            minLength="2"
             onChange={handleChange}
           />
           <span className={`searchform__input-error ${!isValid && errors.movietitle ? 'searchform__input-error_active' : ''}`} id="movietitle-error">{errors.movietitle || ''}</span>
           <button
-            className="searchform__button"
+            className={`searchform__button ${!isValid && errors ? 'searchform__button_disabled' : ''}`}
             type="submit"
             disabled={!isValid}
           />
           <span className="searchform__input-error"></span>
         </div>
-        <FilterCheckbox />
+        <FilterCheckbox onClick={handleCheckboxClick} />
       </form>
     </section>
   );
