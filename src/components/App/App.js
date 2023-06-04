@@ -16,12 +16,18 @@ import mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
 import userAuth from '../../utils/UserAuth';
 import { CurrentUserContext} from '../../contexts/CurrentUserContext';
-import { savedMoviesArray } from '../../constants/savedMoviesArray';
 import successImage from '../../images/Success.svg';
 import failImage from '../../images/Fail.svg';
 
 function App() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate(JSON.parse(window.sessionStorage.getItem('lastRoute')))
+    window.onbeforeunload = () => {
+      window.sessionStorage.setItem('lastRoute', JSON.stringify(window.location.pathname))
+    }
+  }, [])
 
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -32,7 +38,7 @@ function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const [currentUser, setCurrentUser] = useState({});
   const [initialMovies, setInitialMovies] = useState([]);
-  const [savedMovies, setSavedMovies] = useState(savedMoviesArray);
+  const [savedMovies, setSavedMovies] = useState([]);
 
   useEffect(() => {
     checkLocalStorage()
@@ -133,7 +139,9 @@ function App() {
 
   function handleSignOut() {
     localStorage.removeItem('jwt');
-    localStorage.removeItem('lastFoundMovies');
+    localStorage.removeItem('lastRequest');
+    localStorage.removeItem('checkboxState');
+    localStorage.removeItem('lastRequestedMovies');
     setLoggedIn(false);
     setCurrentUser({});
     navigate('/');
@@ -151,12 +159,16 @@ function App() {
   }
 
   function handleGetAllMovies() {
+    setIsLoading(true);
     moviesApi.getAllMovies()
       .then((dataForInitialMovies) => {
         localStorage.setItem('allMovies', JSON.stringify(dataForInitialMovies));
         setInitialMovies(dataForInitialMovies);
       })
       .catch(err => console.log(err))
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   function checkLocalStorage() {
@@ -166,12 +178,6 @@ function App() {
     } else {
       handleGetAllMovies();
     }
-  }
-
-  function filterMovies(moviesArray, keyword) {
-    return moviesArray.filter((movie) => {
-      return movie.nameRU.toLowerCase().includes(keyword);
-    })
   }
 
   const handleMenuPopupClick = () => setIsMenuPopupOpen(true);
@@ -205,7 +211,6 @@ function App() {
                   component={Movies}
                     loggedIn={loggedIn}
                     initialMovies={initialMovies}
-                    handleSearch={filterMovies}
                 />
                 <ProtectedRoute
                   loggedIn={loggedIn}
@@ -241,8 +246,8 @@ function App() {
                 <ProtectedRoute
                   loggedIn={loggedIn}
                   component={Header}
-                  headerClass={'header'}
-                  onMenuPopup={handleMenuPopupClick}
+                    headerClass={'header'}
+                    onMenuPopup={handleMenuPopupClick}
                 />
                 <ProtectedRoute
                   loggedIn={loggedIn}

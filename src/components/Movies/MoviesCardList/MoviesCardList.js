@@ -1,14 +1,14 @@
 import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import Preloader from '../../Preloader/Preloader';
+import { BASE_URL } from '../../../constants/constants';
 
-function MoviesCardList({ movies }) {
-  const BASE_URL = "https://api.nomoreparties.co";
-
+function MoviesCardList({ movies, isLoading }) {
   return (
     <>
       <section className="movies-section" aria-label="Секция с карточками">
         {
-          movies?.map((movie) => {
+          isLoading ? <Preloader /> : movies?.map((movie) => {
             return (
               <MoviesCard
                 country = {movie.country}
