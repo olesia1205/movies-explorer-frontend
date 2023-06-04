@@ -3,15 +3,20 @@ import SearchForm from './SearchForm/SearchForm';
 import MoviesCardList from './MoviesCardList/MoviesCardList';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import failImage from '../../images/Fail.svg';
-import { MOVIES_NOT_FOUND, KEYWORD_NOT_FOUND } from '../../constants/constants';
+import { MOVIES_NOT_FOUND, KEYWORD_NOT_FOUND, SHORT_FILM } from '../../constants/constants';
+import { WIDTH_3_MOVIES, WIDTH_2_MOVIES, MOVIES_12_RENDER, MOVIES_8_RENDER, MOVIES_5_RENDER, MOVIES_3_ADD, MOVIES_2_ADD } from '../../constants/constants';
+import useWindowWidth from '../../utils/WindowWidth';
 
 function Movies({ loggedIn, initialMovies }) {
   const [isLoading, setIsLoading] = useState(false);
   const [foundMovies, setFoundMovies] = useState([]);
+  const [shotMovies, setShotMovies] = useState([]);
   const [searchRequest, setSearchRequest] = useState('');
   const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
   const [infoTooltiptext, setInfoTooltiptext] = useState('');
   const [isCheckboxActive, setIsCheckboxActive] = useState(false);
+  const [moviesToInitialRender, setMoviesToInitialRender] = useState({current: 0, next: 0});
+  const {width} = useWindowWidth();
 
   useEffect(() => {
     checkLastRequest();
@@ -19,7 +24,12 @@ function Movies({ loggedIn, initialMovies }) {
 
   useEffect(() => {
     searchMoviesHandler();
+    filterShotMoviesHandler();
   }, [searchRequest, isCheckboxActive]);
+
+  useEffect(() => {
+    resize()
+  }, [width]);
 
   async function searchMoviesHandler() {
     setIsLoading(true);
@@ -37,8 +47,8 @@ function Movies({ loggedIn, initialMovies }) {
           setRequestToLocalStorage('checkboxState', isCheckboxActive);
         }
       } else {
-        // setInfoTooltiptext(KEYWORD_NOT_FOUND);
-        // setInfoTooltipPopupOpen(true);
+        setInfoTooltiptext(KEYWORD_NOT_FOUND);
+        setInfoTooltipPopupOpen(true);
       }
     } catch(err) {
       console.log(err);
@@ -51,6 +61,16 @@ function Movies({ loggedIn, initialMovies }) {
     return moviesArray.filter((movie) => {
       return movie.nameRU.includes(keyword.toLowerCase());
     })
+  }
+
+  function handleFilter(moviesArray) {
+    return moviesArray.filter((movie) => {
+      return movie.duration <= SHORT_FILM;
+    });
+  }
+
+  function filterShotMoviesHandler() {
+    setShotMovies(handleFilter(foundMovies));
   }
 
   function setRequestToLocalStorage(key, value) {
@@ -79,6 +99,20 @@ function Movies({ loggedIn, initialMovies }) {
     }
   }
 
+  function resize() {
+    if( width >= WIDTH_3_MOVIES) {
+      setMoviesToInitialRender({current: MOVIES_12_RENDER, next: MOVIES_3_ADD});
+    } else if( width < WIDTH_2_MOVIES) {
+      setMoviesToInitialRender({current: MOVIES_5_RENDER, next: MOVIES_2_ADD});
+    } else {
+      setMoviesToInitialRender({current: MOVIES_8_RENDER, next: MOVIES_2_ADD});
+    }
+  }
+
+  function handleMoreClick() {
+    setMoviesToInitialRender({current: moviesToInitialRender.current + moviesToInitialRender.next, next: moviesToInitialRender.next});
+  }
+
   return (
     <main className="movies">
       <SearchForm
@@ -86,8 +120,11 @@ function Movies({ loggedIn, initialMovies }) {
         setIsCheckboxActive={setIsCheckboxActive}
       />
       <MoviesCardList
-        movies={foundMovies}
+        movies={isCheckboxActive ? shotMovies : foundMovies}
         isLoading={isLoading}
+        onClick={handleMoreClick}
+        limit={moviesToInitialRender.current}
+        isSavedMovies={false}
       />
       <InfoTooltip
         isOpen={isInfoTooltipPopupOpen}
