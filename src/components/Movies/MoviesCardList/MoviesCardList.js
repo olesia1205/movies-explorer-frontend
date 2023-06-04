@@ -26,6 +26,7 @@ function MoviesCardList({ movies, isLoading, onClick, limit, isSavedMovies }) {
                   nameRU = {movie.nameRU}
                   nameEN = {movie.nameEN}
                   key={movie.id}
+                  isSavedMovies={isSavedMovies}
                 />
               )
             }
