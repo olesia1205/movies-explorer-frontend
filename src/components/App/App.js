@@ -18,6 +18,7 @@ import userAuth from '../../utils/UserAuth';
 import { CurrentUserContext} from '../../contexts/CurrentUserContext';
 import successImage from '../../images/Success.svg';
 import failImage from '../../images/Fail.svg';
+import transformMovieHandle from '../../utils/MovieTransform';
 
 function App() {
   const navigate = useNavigate();
@@ -47,9 +48,10 @@ function App() {
   useEffect(() => {
     mainApi.getToken();
     if(loggedIn) {
-      mainApi.getUserInfo()
-        .then((userInfo) => {
+      mainApi.getAllNeededData()
+        .then(([userInfo, savedByUserMovies]) => {
           setCurrentUser(userInfo);
+          setSavedMovies(savedByUserMovies);
         })
         .catch((err) => {
           console.log(err);
@@ -142,6 +144,7 @@ function App() {
     localStorage.removeItem('lastRequest');
     localStorage.removeItem('checkboxState');
     localStorage.removeItem('lastRequestedMovies');
+    localStorage.removeItem('allMovies');
     setLoggedIn(false);
     setCurrentUser({});
     navigate('/');
@@ -162,8 +165,9 @@ function App() {
     setIsLoading(true);
     moviesApi.getAllMovies()
       .then((dataForInitialMovies) => {
-        localStorage.setItem('allMovies', JSON.stringify(dataForInitialMovies));
-        setInitialMovies(dataForInitialMovies);
+        const transformedmovies = transformMovieHandle(dataForInitialMovies);
+        localStorage.setItem('allMovies', JSON.stringify(transformedmovies));
+        setInitialMovies(transformedmovies);
       })
       .catch(err => console.log(err))
       .finally(() => {
@@ -178,6 +182,31 @@ function App() {
     } else {
       handleGetAllMovies();
     }
+  }
+
+  function handleSaveMovie(movie) {
+    setIsLoading(true);
+    mainApi.postNewMovie(movie)
+      .then((savedMovie) => {
+        setSavedMovies([savedMovie, ...savedMovies]);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsLoading(false);
+      })
+  }
+
+  function handleDeleteMovie(_id) {
+    setIsLoading(true);
+    mainApi.deleteMovie(_id)
+      .then(() => {
+        const restSavedMovies = savedMovies.filter((movie) => movie._id !== _id);
+        setSavedMovies(restSavedMovies);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   const handleMenuPopupClick = () => setIsMenuPopupOpen(true);
@@ -211,6 +240,9 @@ function App() {
                   component={Movies}
                     loggedIn={loggedIn}
                     initialMovies={initialMovies}
+                    onSave={handleSaveMovie}
+                    onDelete={handleDeleteMovie}
+                    savedMovies={savedMovies}
                 />
                 <ProtectedRoute
                   loggedIn={loggedIn}

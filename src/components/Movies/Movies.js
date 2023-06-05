@@ -7,7 +7,7 @@ import { MOVIES_NOT_FOUND, KEYWORD_NOT_FOUND, SHORT_FILM } from '../../constants
 import { WIDTH_3_MOVIES, WIDTH_2_MOVIES, MOVIES_12_RENDER, MOVIES_8_RENDER, MOVIES_5_RENDER, MOVIES_3_ADD, MOVIES_2_ADD } from '../../constants/constants';
 import useWindowWidth from '../../utils/WindowWidth';
 
-function Movies({ loggedIn, initialMovies }) {
+function Movies({ loggedIn, initialMovies, onSave, onDelete, savedMovies }) {
   const [isLoading, setIsLoading] = useState(false);
   const [foundMovies, setFoundMovies] = useState([]);
   const [shotMovies, setShotMovies] = useState([]);
@@ -118,6 +118,7 @@ function Movies({ loggedIn, initialMovies }) {
       <SearchForm
         handleSearch={setSearchRequest}
         setIsCheckboxActive={setIsCheckboxActive}
+        searchRequest={searchRequest}
       />
       <MoviesCardList
         movies={isCheckboxActive ? shotMovies : foundMovies}
@@ -125,6 +126,9 @@ function Movies({ loggedIn, initialMovies }) {
         onClick={handleMoreClick}
         limit={moviesToInitialRender.current}
         isSavedMovies={false}
+        onSave={onSave}
+        onDelete={onDelete}
+        savedMovies={savedMovies}
       />
       <InfoTooltip
         isOpen={isInfoTooltipPopupOpen}

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import useValidation from '../../../utils/Validation';
 
-function SearchForm({ handleSearch, setIsCheckboxActive }) {
+function SearchForm({ handleSearch, setIsCheckboxActive, searchRequest }) {
   const { values, errors, handleChange, resetValidation, isValid } = useValidation();
   const keyword = values.movietitle;
 

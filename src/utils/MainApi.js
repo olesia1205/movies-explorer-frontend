@@ -25,12 +25,16 @@ class MainApi {
       .then(this._getResponseData);
   }
 
-  _getInitialMovies() {
+  _getSavedMovies() {
     return fetch(`${this._url}/movies`, {
       method: 'GET',
       headers: this._headers
     })
       .then(this._getResponseData);
+  }
+
+  getAllNeededData() {
+    return Promise.all([this.getUserInfo(), this._getSavedMovies()]);
   }
 
   patchUserInfo(data) {
@@ -64,7 +68,7 @@ class MainApi {
   }
 
   deleteMovie(movieId) {
-    return fetch(`${this._url}movies/${movieId}`, {
+    return fetch(`${this._url}/movies/${movieId}`, {
       method: 'DELETE',
       headers: this._headers
     })
