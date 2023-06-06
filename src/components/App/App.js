@@ -263,7 +263,11 @@ function App() {
                 <ProtectedRoute
                   loggedIn={loggedIn}
                   component={SavedMovies}
-                    movies={savedMovies}
+                    // loggedIn={loggedIn}
+                    initialMovies={savedMovies}
+                    onSave={handleSaveMovie}
+                    onDelete={handleDeleteMovie}
+                    savedMovies={savedMovies}
                 />
                 <ProtectedRoute
                   loggedIn={loggedIn}

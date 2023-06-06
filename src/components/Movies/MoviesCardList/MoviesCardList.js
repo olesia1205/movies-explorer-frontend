@@ -9,10 +9,8 @@ function MoviesCardList({ movies, isLoading, onClick, limit, isSavedMovies, onSa
         {
           isLoading ? <Preloader /> :
             movies?.map((movie, index, array) => {
-              const renderLimit = isSavedMovies ? array.length : limit;
-
               return (
-                index < renderLimit &&
+                index < limit &&
                 <MoviesCard
                   isSavedMovies={isSavedMovies}
                   onSave={onSave}
@@ -26,7 +24,7 @@ function MoviesCardList({ movies, isLoading, onClick, limit, isSavedMovies, onSa
         )}
       </section>
       {
-        (!isSavedMovies && movies.length > limit) &&
+        (movies.length > limit) &&
           (
             <section className="more-section" aria-label="Секция с кнопкой еще">
               <button
