@@ -47,8 +47,8 @@ function SavedMovies({ loggedIn, initialMovies, onSave, onDelete, savedMovies })
           setRequestToLocalStorage('checkboxState', isCheckboxActive);
         }
       } else {
-        setInfoTooltiptext(KEYWORD_NOT_FOUND);
-        setInfoTooltipPopupOpen(true);
+        // setInfoTooltiptext(KEYWORD_NOT_FOUND);
+        // setInfoTooltipPopupOpen(true);
       }
     } catch(err) {
       console.log(err);

@@ -19,13 +19,13 @@ function Movies({ loggedIn, initialMovies, onSave, onDelete, savedMovies }) {
   const {width} = useWindowWidth();
 
   useEffect(() => {
-    checkLastRequest();
-  }, []);
-
-  useEffect(() => {
     searchMoviesHandler();
     filterShotMoviesHandler();
   }, [searchRequest, isCheckboxActive]);
+
+  useEffect(() => {
+    checkLastRequest();
+  }, []);
 
   useEffect(() => {
     resize()
@@ -41,14 +41,14 @@ function Movies({ loggedIn, initialMovies, onSave, onDelete, savedMovies }) {
           setInfoTooltiptext(MOVIES_NOT_FOUND);
           setInfoTooltipPopupOpen(true);
         } else {
-          setFoundMovies(moviesToRender);
           setRequestToLocalStorage('lastRequest', searchRequest);
-          setRequestToLocalStorage('lastRequestedMovies', foundMovies);
+          setRequestToLocalStorage('lastRequestedMovies', moviesToRender);
+          setFoundMovies(moviesToRender);
           setRequestToLocalStorage('checkboxState', isCheckboxActive);
         }
       } else {
-        setInfoTooltiptext(KEYWORD_NOT_FOUND);
-        setInfoTooltipPopupOpen(true);
+        // setInfoTooltiptext(KEYWORD_NOT_FOUND);
+        // setInfoTooltipPopupOpen(true);
       }
     } catch(err) {
       console.log(err);
@@ -77,10 +77,18 @@ function Movies({ loggedIn, initialMovies, onSave, onDelete, savedMovies }) {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
+  // function checkLastRequest() {
+  //   const lastSearchRequest = localStorage.getItem('lastRequest');
+  //   if (lastSearchRequest) {
+  //     setSearchRequest(getLastRequestFromLocalStorage('lastRequest'));
+  //   }
+  //   return
+  // }
+
   function checkLastRequest() {
-    const lastSearchRequest = localStorage.getItem('lastRequest');
-    if (lastSearchRequest) {
-      setSearchRequest(getLastRequestFromLocalStorage('lastRequest'))
+    const lastMovies = localStorage.getItem('lastRequestedMovies');
+    if (lastMovies) {
+      setFoundMovies(getLastRequestFromLocalStorage('lastRequestedMovies'));
     }
     return
   }

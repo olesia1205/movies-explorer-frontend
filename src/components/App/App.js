@@ -22,16 +22,8 @@ import transformMovieHandle from '../../utils/MovieTransform';
 
 function App() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    navigate(JSON.parse(window.sessionStorage.getItem('lastRoute') || '{}'))
-    window.onbeforeunload = () => {
-      window.sessionStorage.setItem('lastRoute', JSON.stringify(window.location.pathname))
-    }
-  }, [])
-
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
   const [registered, setRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -40,10 +32,6 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [initialMovies, setInitialMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
-
-  useEffect(() => {
-    checkLocalStorage()
-  }, []);
 
   useEffect(() => {
     mainApi.getToken();
@@ -81,6 +69,10 @@ function App() {
       .catch(err => console.log(err))
     }
   }, [navigate]);
+
+  useEffect(() => {
+    checkLocalStorage()
+  }, []);
 
   function handleRegister({ email, password, name }) {
     setIsLoading(true);
@@ -144,7 +136,7 @@ function App() {
     localStorage.removeItem('lastRequest');
     localStorage.removeItem('checkboxState');
     localStorage.removeItem('lastRequestedMovies');
-    localStorage.removeItem('allMovies');
+    // localStorage.removeItem('allMovies');
     setLoggedIn(false);
     setCurrentUser({});
     navigate('/');

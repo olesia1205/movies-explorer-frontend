@@ -8,6 +8,7 @@ function FilterCheckbox({ onClick }) {
           <input
             type="checkbox"
             className="filtercheckbox__checkbox-invisible"
+            // checked={}
             onChange={(evt) => onClick(evt.target.checked)}
           />
           <span className="filtercheckbox__checkbox-visible" />
