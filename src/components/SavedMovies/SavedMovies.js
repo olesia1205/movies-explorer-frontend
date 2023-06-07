@@ -7,7 +7,7 @@ import { MOVIES_NOT_FOUND, KEYWORD_NOT_FOUND, SHORT_FILM } from '../../constants
 import { WIDTH_3_MOVIES, WIDTH_2_MOVIES, MOVIES_12_RENDER, MOVIES_8_RENDER, MOVIES_5_RENDER, MOVIES_3_ADD, MOVIES_2_ADD } from '../../constants/constants';
 import useWindowWidth from '../../utils/WindowWidth';
 
-function SavedMovies({ loggedIn, initialMovies, onSave, onDelete, savedMovies }) {
+function SavedMovies({ initialMovies, onSave, onDelete, savedMovies }) {
   const [isLoading, setIsLoading] = useState(false);
   const [foundMovies, setFoundMovies] = useState([]);
   const [shotMovies, setShotMovies] = useState([]);
@@ -19,8 +19,8 @@ function SavedMovies({ loggedIn, initialMovies, onSave, onDelete, savedMovies })
   const {width} = useWindowWidth();
 
   useEffect(() => {
-    checkLastRequest();
-  }, []);
+    setFoundMovies(initialMovies);
+  }, [])
 
   useEffect(() => {
     searchMoviesHandler();
@@ -33,7 +33,7 @@ function SavedMovies({ loggedIn, initialMovies, onSave, onDelete, savedMovies })
 
   async function searchMoviesHandler() {
     setIsLoading(true);
-    setFoundMovies([]);
+    // setFoundMovies([]);
     try {
       if(searchRequest.length > 0) {
         const moviesToRender = await handleSearch(initialMovies, searchRequest);
@@ -42,9 +42,6 @@ function SavedMovies({ loggedIn, initialMovies, onSave, onDelete, savedMovies })
           setInfoTooltipPopupOpen(true);
         } else {
           setFoundMovies(moviesToRender);
-          setRequestToLocalStorage('lastRequest', searchRequest);
-          setRequestToLocalStorage('lastRequestedMovies', foundMovies);
-          setRequestToLocalStorage('checkboxState', isCheckboxActive);
         }
       } else {
         // setInfoTooltiptext(KEYWORD_NOT_FOUND);
@@ -59,7 +56,9 @@ function SavedMovies({ loggedIn, initialMovies, onSave, onDelete, savedMovies })
 
   function handleSearch(moviesArray, keyword) {
     return moviesArray.filter((movie) => {
-      return movie.nameRU.includes(keyword.toLowerCase());
+      const a = keyword.toLowerCase().trim();
+      return movie.nameRU.toLowerCase().indexOf(a) !== -1 ||
+      movie.nameEN.toLowerCase().indexOf(a) !== -1
     })
   }
 
@@ -71,22 +70,6 @@ function SavedMovies({ loggedIn, initialMovies, onSave, onDelete, savedMovies })
 
   function filterShotMoviesHandler() {
     setShotMovies(handleFilter(foundMovies));
-  }
-
-  function setRequestToLocalStorage(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
-  }
-
-  function checkLastRequest() {
-    const lastSearchRequest = localStorage.getItem('lastRequest');
-    if (lastSearchRequest) {
-      setSearchRequest(getLastRequestFromLocalStorage('lastRequest'))
-    }
-    return
-  }
-
-  function getLastRequestFromLocalStorage(key) {
-    return JSON.parse(localStorage.getItem(key));
   }
 
   function closeAllPopups() {
@@ -121,7 +104,7 @@ function SavedMovies({ loggedIn, initialMovies, onSave, onDelete, savedMovies })
         searchRequest={searchRequest}
       />
       <MoviesCardList
-        movies={isCheckboxActive ? shotMovies : foundMovies}
+        movies={!searchRequest ? isCheckboxActive ? shotMovies : initialMovies : isCheckboxActive ? shotMovies : foundMovies}
         isLoading={isLoading}
         onClick={handleMoreClick}
         limit={moviesToInitialRender.current}
@@ -130,11 +113,11 @@ function SavedMovies({ loggedIn, initialMovies, onSave, onDelete, savedMovies })
         onDelete={onDelete}
         savedMovies={savedMovies}
       />
-      {/* {
+      {
         (
           <section className="saved-movies__saveddevider" aria-label="Секция отделяющая карточки от Footer" />
         )
-      } */}
+      }
       <InfoTooltip
         isOpen={isInfoTooltipPopupOpen}
         title={infoTooltiptext}

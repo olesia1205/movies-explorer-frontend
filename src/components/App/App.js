@@ -255,7 +255,6 @@ function App() {
                 <ProtectedRoute
                   loggedIn={loggedIn}
                   component={SavedMovies}
-                    // loggedIn={loggedIn}
                     initialMovies={savedMovies}
                     onSave={handleSaveMovie}
                     onDelete={handleDeleteMovie}

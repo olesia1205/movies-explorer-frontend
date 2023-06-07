@@ -41,6 +41,9 @@
   color: #000000;
   transition: opacity 0.35s linear;
   cursor: pointer;
+  border: none;
+  padding: 0;
+  background-color: transparent;
 }
 
 .notfound__link:hover {

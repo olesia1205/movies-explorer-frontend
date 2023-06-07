@@ -59,7 +59,9 @@ function Movies({ loggedIn, initialMovies, onSave, onDelete, savedMovies }) {
 
   function handleSearch(moviesArray, keyword) {
     return moviesArray.filter((movie) => {
-      return movie.nameRU.includes(keyword.toLowerCase());
+      const a = keyword.toLowerCase().trim();
+      return movie.nameRU.toLowerCase().indexOf(a) !== -1 ||
+      movie.nameEN.toLowerCase().indexOf(a) !== -1
     })
   }
 
@@ -77,18 +79,14 @@ function Movies({ loggedIn, initialMovies, onSave, onDelete, savedMovies }) {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
-  // function checkLastRequest() {
-  //   const lastSearchRequest = localStorage.getItem('lastRequest');
-  //   if (lastSearchRequest) {
-  //     setSearchRequest(getLastRequestFromLocalStorage('lastRequest'));
-  //   }
-  //   return
-  // }
-
   function checkLastRequest() {
     const lastMovies = localStorage.getItem('lastRequestedMovies');
     if (lastMovies) {
       setFoundMovies(getLastRequestFromLocalStorage('lastRequestedMovies'));
+    }
+    const lastRequestedKeyword = localStorage.getItem('lastRequest');
+    if (lastRequestedKeyword) {
+      setSearchRequest(getLastRequestFromLocalStorage('lastRequest'));
     }
     return
   }
