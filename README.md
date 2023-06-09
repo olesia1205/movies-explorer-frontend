@@ -10,3 +10,5 @@ const [loggedIn, setLoggedIn] = useState(true);
 Ссылка на пул реквест: https://github.com/olesia1205/movies-explorer-frontend/pull/2
 
 Ссылка на макет: https://disk.yandex.ru/d/4_gDGGuUR5HCyg
+
+Ссылка на фронтенд-часть приложения: https://movies.olerastova.nomoredomains.monster/
