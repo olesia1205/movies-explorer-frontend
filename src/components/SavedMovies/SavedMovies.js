@@ -74,6 +74,10 @@ function SavedMovies({ initialMovies, onSave, onDelete, savedMovies }) {
     setShotMovies(handleFilter(foundMovies));
   }
 
+  function handleCheckboxClick(value) {
+    setIsCheckboxActive(value);
+  }
+
   function closeAllPopups() {
     setInfoTooltipPopupOpen(false);
   }
@@ -102,8 +106,9 @@ function SavedMovies({ initialMovies, onSave, onDelete, savedMovies }) {
     <main className="movies saved-movies">
       <SearchForm
         handleSearch={setSearchRequest}
-        setIsCheckboxActive={setIsCheckboxActive}
+        handleCheckboxClick={handleCheckboxClick}
         searchRequest={searchRequest}
+        checkboxState={isCheckboxActive}
       />
       <MoviesCardList
         movies={!searchRequest ? isCheckboxActive ? shotMovies : initialMovies : isCheckboxActive ? shotMovies : foundMovies}

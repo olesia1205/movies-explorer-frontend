@@ -81,27 +81,20 @@ function Movies({ loggedIn, initialMovies, onSave, onDelete, savedMovies }) {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
-  async function checkLastRequest() {
-    setIsLoading(true);
-    try {
-      const lastMovies = localStorage.getItem('lastRequestedMovies');
-      if (lastMovies) {
-        setFoundMovies(getLastRequestFromLocalStorage('lastRequestedMovies'));
-      }
-      const lastRequestedKeyword = localStorage.getItem('lastRequest');
-      if (lastRequestedKeyword) {
-        setSearchRequest(getLastRequestFromLocalStorage('lastRequest'));
-      }
-      const lastRequestedCheckboxState = localStorage.getItem('checkboxState');
-      if (lastRequestedCheckboxState) {
-        setIsCheckboxActive(getLastRequestFromLocalStorage('checkboxState'));
-      }
-      return
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
+  function checkLastRequest() {
+    const lastMovies = localStorage.getItem('lastRequestedMovies');
+    if (lastMovies) {
+      setFoundMovies(getLastRequestFromLocalStorage('lastRequestedMovies'));
     }
+    const lastRequestedKeyword = localStorage.getItem('lastRequest');
+    if (lastRequestedKeyword) {
+      setSearchRequest(getLastRequestFromLocalStorage('lastRequest'));
+    }
+    const lastRequestedCheckboxState = localStorage.getItem('checkboxState');
+    if (lastRequestedCheckboxState) {
+      setIsCheckboxActive(getLastRequestFromLocalStorage('checkboxState'));
+    }
+    return
   }
 
   function getLastRequestFromLocalStorage(key) {
@@ -141,7 +134,6 @@ function Movies({ loggedIn, initialMovies, onSave, onDelete, savedMovies }) {
       <SearchForm
         handleSearch={setSearchRequest}
         handleCheckboxClick={handleCheckboxClick}
-        // setIsCheckboxActive={setIsCheckboxActive}
         searchRequest={searchRequest}
         checkboxState={isCheckboxActive}
       />
