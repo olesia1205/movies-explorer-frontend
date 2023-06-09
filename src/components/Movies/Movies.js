@@ -46,10 +46,12 @@ function Movies({ loggedIn, initialMovies, onSave, onDelete, savedMovies }) {
           setFoundMovies(moviesToRender);
           setRequestToLocalStorage('checkboxState', isCheckboxActive);
         }
-      } else {
-        setInfoTooltiptext(KEYWORD_NOT_FOUND);
-        setInfoTooltipPopupOpen(true);
       }
+      //   else {
+      //     setInfoTooltiptext(KEYWORD_NOT_FOUND);
+      //     setInfoTooltipPopupOpen(true);
+      // }
+      return
     } catch(err) {
       console.log(err);
     } finally {
@@ -79,20 +81,35 @@ function Movies({ loggedIn, initialMovies, onSave, onDelete, savedMovies }) {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
-  function checkLastRequest() {
-    const lastMovies = localStorage.getItem('lastRequestedMovies');
-    if (lastMovies) {
-      setFoundMovies(getLastRequestFromLocalStorage('lastRequestedMovies'));
+  async function checkLastRequest() {
+    setIsLoading(true);
+    try {
+      const lastMovies = localStorage.getItem('lastRequestedMovies');
+      if (lastMovies) {
+        setFoundMovies(getLastRequestFromLocalStorage('lastRequestedMovies'));
+      }
+      const lastRequestedKeyword = localStorage.getItem('lastRequest');
+      if (lastRequestedKeyword) {
+        setSearchRequest(getLastRequestFromLocalStorage('lastRequest'));
+      }
+      const lastRequestedCheckboxState = localStorage.getItem('checkboxState');
+      if (lastRequestedCheckboxState) {
+        setIsCheckboxActive(getLastRequestFromLocalStorage('checkboxState'));
+      }
+      return
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-    const lastRequestedKeyword = localStorage.getItem('lastRequest');
-    if (lastRequestedKeyword) {
-      setSearchRequest(getLastRequestFromLocalStorage('lastRequest'));
-    }
-    return
   }
 
   function getLastRequestFromLocalStorage(key) {
     return JSON.parse(localStorage.getItem(key));
+  }
+
+  function handleCheckboxClick(value) {
+    setIsCheckboxActive(value);
   }
 
   function closeAllPopups() {
@@ -123,8 +140,10 @@ function Movies({ loggedIn, initialMovies, onSave, onDelete, savedMovies }) {
     <main className="movies">
       <SearchForm
         handleSearch={setSearchRequest}
-        setIsCheckboxActive={setIsCheckboxActive}
+        handleCheckboxClick={handleCheckboxClick}
+        // setIsCheckboxActive={setIsCheckboxActive}
         searchRequest={searchRequest}
+        checkboxState={isCheckboxActive}
       />
       <MoviesCardList
         movies={isCheckboxActive ? shotMovies : foundMovies}

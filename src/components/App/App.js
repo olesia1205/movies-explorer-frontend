@@ -23,7 +23,7 @@ import transformMovieHandle from '../../utils/MovieTransform';
 function App() {
   const navigate = useNavigate();
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
   const [registered, setRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +32,25 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [initialMovies, setInitialMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
+
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      userAuth.getContent(jwt)
+      .then((response) => {
+        setLoggedIn(true);
+        setCurrentUser({
+          email: response.email,
+          name: response.name
+        });
+      })
+      .catch(err => console.log(err))
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    checkLocalStorage()
+  }, []);
 
   useEffect(() => {
     mainApi.getToken();
@@ -55,24 +74,7 @@ function App() {
     resetErrorMessage();
   }, [resetErrorMessage, navigate]);
 
-  useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      userAuth.getContent(jwt)
-      .then((response) => {
-        setLoggedIn(true);
-        setCurrentUser({
-          email: response.email,
-          name: response.name
-        });
-      })
-      .catch(err => console.log(err))
-    }
-  }, [navigate]);
 
-  useEffect(() => {
-    checkLocalStorage()
-  }, []);
 
   function handleRegister({ email, password, name }) {
     setIsLoading(true);
@@ -136,7 +138,7 @@ function App() {
     localStorage.removeItem('lastRequest');
     localStorage.removeItem('checkboxState');
     localStorage.removeItem('lastRequestedMovies');
-    // localStorage.removeItem('allMovies');
+    localStorage.removeItem('allMovies');
     setLoggedIn(false);
     setCurrentUser({});
     navigate('/');
@@ -213,6 +215,7 @@ function App() {
                 <Header
                   loggedIn={loggedIn}
                   headerClass={'header header-unlogged'}
+                  onMenuPopup={handleMenuPopupClick}
                 />
                 <Main />
                 <Footer />

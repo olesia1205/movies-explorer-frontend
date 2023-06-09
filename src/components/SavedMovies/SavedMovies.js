@@ -43,10 +43,12 @@ function SavedMovies({ initialMovies, onSave, onDelete, savedMovies }) {
         } else {
           setFoundMovies(moviesToRender);
         }
-      } else {
-        // setInfoTooltiptext(KEYWORD_NOT_FOUND);
-        // setInfoTooltipPopupOpen(true);
       }
+        // else {
+        //   setInfoTooltiptext(KEYWORD_NOT_FOUND);
+        //   setInfoTooltipPopupOpen(true);
+        // }
+      return
     } catch(err) {
       console.log(err);
     } finally {
