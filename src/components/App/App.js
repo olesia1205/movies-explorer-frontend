@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -23,7 +23,7 @@ import transformMovieHandle from '../../utils/MovieTransform';
 function App() {
   const navigate = useNavigate();
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(localStorage.getItem('loggedIn') ||  false);
   const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
   const [registered, setRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -74,8 +74,6 @@ function App() {
     resetErrorMessage();
   }, [resetErrorMessage, navigate]);
 
-
-
   function handleRegister({ email, password, name }) {
     setIsLoading(true);
 
@@ -96,7 +94,6 @@ function App() {
 
   function handleLogin({ email, password }) {
     setIsLoading(true);
-
     userAuth.authorize({ email, password })
     .then((response) => {
       localStorage.setItem('jwt', response.token);
@@ -105,6 +102,7 @@ function App() {
         email: response.email,
         name: response.name
       });
+      localStorage.setItem('loggedIn', true);
       navigate('/movies');
     })
     .catch((error) => {
@@ -135,6 +133,7 @@ function App() {
 
   function handleSignOut() {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('loggedIn');
     localStorage.removeItem('lastRequest');
     localStorage.removeItem('checkboxState');
     localStorage.removeItem('lastRequestedMovies');
@@ -290,24 +289,41 @@ function App() {
               </>
             }
           />
-          <Route path='/signup'
-            element={
-              <Register
-                onRegisterUserData={handleRegister}
-                isLoading={isLoading}
-                errorMessage={errorMessage}
-              />
-            }
-          />
-          <Route path='/signin'
-            element={
-              <Login
-                onLoginUserData={handleLogin}
-                isLoading={isLoading}
-                errorMessage={errorMessage}
-              />
-            }
-          />
+
+          { !loggedIn ? (
+            <Route path='/signup'
+              element={
+                <Register
+                  onRegisterUserData={handleRegister}
+                  isLoading={isLoading}
+                  errorMessage={errorMessage}
+                />
+              }
+            /> ) : (
+            <Route path='/signup'
+              element={
+                <Navigate to="/"/>
+              }
+            />
+          )}
+
+          { !loggedIn ? (
+            <Route path='/signin'
+              element={
+                <Login
+                  onLoginUserData={handleLogin}
+                  isLoading={isLoading}
+                  errorMessage={errorMessage}
+                />
+              }
+          /> ) : (
+            <Route path='/signin'
+              element={
+                <Navigate to="/" />
+              }
+            />
+          )}
+
           <Route path='*'
             element={
               <PageNotFound/>
