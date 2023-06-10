@@ -11,8 +11,8 @@ function Profile({ onUpdateUserInfo, signOut, isLoading, errorMessage }) {
   let isMatch = (currentUser.name === values.name) || (currentUser.email === values.email);
 
   useEffect(() => {
-    resetValidation();
-  }, [resetValidation]);
+    resetValidation({email: currentUser.email, name: currentUser.name});
+  }, [currentUser]);
 
   function handleSubmit (evt) {
     evt.preventDefault();
@@ -30,7 +30,7 @@ function Profile({ onUpdateUserInfo, signOut, isLoading, errorMessage }) {
             className="profile__input"
             type="text"
             name="name"
-            placeholder={currentUser.name}
+            placeholder='Ваше имя'
             value={values.name || ''}
             onChange={handleChange}
             required
@@ -46,7 +46,7 @@ function Profile({ onUpdateUserInfo, signOut, isLoading, errorMessage }) {
             className="profile__input"
             type="email"
             name="email"
-            placeholder={currentUser.email}
+            placeholder='Ваш email'
             value={values.email || ''}
             onChange={handleChange}
             required
