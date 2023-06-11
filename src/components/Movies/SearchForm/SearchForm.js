@@ -2,24 +2,18 @@ import React, { useEffect } from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import useValidation from '../../../utils/Validation';
 
-function SearchForm({ handleSearch, handleCheckboxClick,
-  // setIsCheckboxActive,
-  searchRequest, checkboxState }) {
+function SearchForm({ handleSearch, handleCheckboxClick, searchRequest, checkboxState }) {
   const { values, errors, handleChange, resetValidation, isValid } = useValidation();
   const {movietitle} = values;
 
   useEffect(() => {
-    resetValidation();
-  }, [resetValidation]);
+    resetValidation({movietitle: searchRequest});
+  }, [searchRequest]);
 
   function handleSearchFormClick(evt) {
     evt.preventDefault();
     handleSearch(movietitle);
   }
-
-  // function handleCheckboxClick(value) {
-  //   setIsCheckboxActive(value);
-  // }
 
   return (
     <section className="searchform" aria-label="Форма поиска">
@@ -29,7 +23,7 @@ function SearchForm({ handleSearch, handleCheckboxClick,
             className="searchform__input"
             type="text"
             name="movietitle"
-            placeholder={searchRequest}
+            placeholder='Фильм'
             value={values.movietitle || ''}
             required
             onChange={handleChange}

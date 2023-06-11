@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Preloader from '../Preloader/Preloader';
@@ -8,11 +8,16 @@ function Profile({ onUpdateUserInfo, signOut, isLoading, errorMessage }) {
   const currentUser = useContext(CurrentUserContext);
   const { values, errors, handleChange, resetValidation, isValid } = useValidation();
   const { email, name } = values;
-  let isMatch = (currentUser.name === values.name) || (currentUser.email === values.email);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
     resetValidation({email: currentUser.email, name: currentUser.name});
   }, [currentUser]);
+
+  useEffect(() => {
+    let isMatch = (currentUser.name !== values.name) || (currentUser.email !== values.email);
+    setIsDisabled(isMatch);
+  }, [values, currentUser, isValid])
 
   function handleSubmit (evt) {
     evt.preventDefault();
@@ -60,7 +65,7 @@ function Profile({ onUpdateUserInfo, signOut, isLoading, errorMessage }) {
         <button
           className={`profile__edit-button ${!isValid && errors ? 'profile__edit-button_disabled' : ''}`}
           type="submit"
-          disabled={!isValid || isMatch}
+          disabled={!isValid || !isDisabled}
         >Редактировать
         </button>
         <Link to="/">
