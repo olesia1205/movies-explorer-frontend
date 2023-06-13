@@ -5,23 +5,32 @@ class UserAuth {
   }
 
   _getResponse(response) {
-    return response.ok ? response.json() : Promise.reject(`Ошибка: ${response.status}`);
+    if (response.ok) {
+      return(response.json());
+    } else {
+      return(response.json())
+        .then((err) => {
+          const error = new Error(err.message);
+          error.status = response.status;
+          throw error;
+        })
+    }
   }
 
-  register({password, email}) {
+  register({ email, password, name }) {
     return fetch(`${this._url}/signup`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify({password, email})
+      body: JSON.stringify({ email, password, name })
     })
     .then(this._getResponse)
   }
 
-  authorize({password, email}) {
+  authorize({ email, password }) {
     return fetch(`${this._url}/signin`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify({email, password})
+      body: JSON.stringify({ email, password })
     })
     .then(this._getResponse)
   }
