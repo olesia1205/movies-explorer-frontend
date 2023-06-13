@@ -65,7 +65,8 @@
 
 .menu__account {
   padding: 0;
-  margin-top: 620px;
+  margin-top: auto;
+  margin-bottom: 47px;
   border: none;
   display: flex;
 }
