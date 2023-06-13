@@ -1,3 +1,4 @@
+[![LOGO](src/images/logo__main-2.svg)](https://movies.olerastova.nomoredomains.monster "Я ♥ ЯНДЕКС ПРАКТИКУМ!")
 # movies-explorer-frontend
 Frontend-часть дипломной работы
 
@@ -18,6 +19,17 @@ Frontend-часть дипломной работы
 - [x] Бэкенд задеплоен на Яндекс Облако.
 
 `Инструменты и стек:`
+
+- [x] HTML;
+- [x] CSS;
+- [x] React;
+- [x] Express;
+- [x] MongoDB;
+- [x] NodeJS;
+- [x] API;
+- [x] Nginx;
+- [x] JWT;
+- [x] Postman.
 
  `Запуск проекта`
 
@@ -52,15 +64,5 @@ Frontend-часть дипломной работы
 ![screenshot](src/images/5.png)
 
 
-
-
-
-
-
 ## Ссылки на проект
-
-Ссылка на пул реквест: https://github.com/olesia1205/movies-explorer-frontend/pull/2
-
-Ссылка на макет: https://disk.yandex.ru/d/4_gDGGuUR5HCyg
-
-Ссылка на фронтенд-часть приложения: https://movies.olerastova.nomoredomains.monster/
+Ссылка на фронтенд-часть приложения: https://movies.olerastova.nomoredomains.monster
