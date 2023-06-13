@@ -104,6 +104,7 @@ function SavedMovies({ initialMovies, onSave, onDelete, savedMovies }) {
 
   return (
     <main className="movies saved-movies">
+
       <SearchForm
         handleSearch={setSearchRequest}
         handleCheckboxClick={handleCheckboxClick}

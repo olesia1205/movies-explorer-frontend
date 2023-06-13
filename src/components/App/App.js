@@ -90,8 +90,7 @@ function App() {
     .finally(() => {
       setIsLoading(false);
     })
-  }
-
+    
   function handleLogin({ email, password }) {
     setIsLoading(true);
     userAuth.authorize({ email, password })
