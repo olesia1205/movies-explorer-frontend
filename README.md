@@ -1,4 +1,4 @@
-[![LOGO](src/images/logo__main-2.svg)](https://movies.olerastova.nomoredomains.monster "Я ♥ ЯНДЕКС ПРАКТИКУМ!")
+[![LOGO](src/images/logo__main-1.svg)](https://movies.olerastova.nomoredomains.monster "Я ♥ ЯНДЕКС ПРАКТИКУМ!")
 # movies-explorer-frontend
 Frontend-часть дипломной работы
 
