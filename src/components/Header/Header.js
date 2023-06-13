@@ -9,7 +9,7 @@ function Header({ loggedIn, headerClass, onMenuPopup }) {
       <Link className="header__logo-link" to="/">
         <img className="header__logo" src={headerLogo} alt="Логотип"/>
       </Link>
-      {loggedIn ? (
+      { loggedIn ? (
         <div className="header__navigation">
           <Navigation
             onMenuPopup={onMenuPopup}

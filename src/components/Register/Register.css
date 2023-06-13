@@ -38,6 +38,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .register__inputs-block {
@@ -87,12 +88,31 @@
 }
 
 .register__input-error {
+  display: none;
+}
+
+.register__input-error_active {
+  display: block;
   font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
   font-size: 10px;
-  line-height: 12px;
+  line-height: 11px;
   font-style: normal;
   font-weight: 400;
   color: #FF4062;
+  position:absolute;
+  width: 396px;
+}
+
+.register__error {
+  display: block;
+  text-align: center;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 10px;
+  line-height: 11px;
+  font-style: normal;
+  font-weight: 400;
+  color: #FF4062;
+  width: 396px;
 }
 
 .register__buttons-block {
@@ -113,6 +133,14 @@
   font-style: normal;
   font-weight: 500;
   transition: opacity .35s linear;
+}
+
+.register__submit-button_disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  color: #000000;
+  border: 1px solid #000000;
 }
 
 .register__link-block {
@@ -171,6 +199,7 @@
     padding: 15px 0 ;
     font-size: 12px;
     line-height: 15px;
+    width: 260px;
   }
 
   .register__link-block {
@@ -185,5 +214,9 @@
 
   .register__link-text {
     padding: 0 7px 0 0;
+  }
+
+  .register__input-error {
+    width: 260px;
   }
 }
