@@ -121,6 +121,7 @@
   font-weight: 500;
   transition: opacity 0.35s linear;
   cursor: pointer;
+  background-color: transparent;
 }
 
 .profile__signout-button:hover {
