@@ -57,12 +57,9 @@ Frontend-часть дипломной работы
 
 ***
 
-![screenshot](srс/images/3.png)
 ![screenshot](src/images/1.png)
 ![screenshot](src/images/2.png)
+![screenshot](src/images/3.png)
 ![screenshot](src/images/4.png)
-![screenshot](src/images/5.png)
 
-
-## Ссылки на проект
-Ссылка на фронтенд-часть приложения: https://movies.olerastova.nomoredomains.monster
+## Ссылка на фронтенд-часть приложения: https://movies.olerastova.nomoredomains.monster
