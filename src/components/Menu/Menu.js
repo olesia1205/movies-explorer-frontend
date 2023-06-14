@@ -5,29 +5,25 @@ import  accountLogo from '../../images/account__logo.svg';
 function Menu({ isOpen, onClose, onOverlayClick }) {
   return (
     <div className={`menu  ${isOpen ? 'menu_is-opened' : ''}`} onClick={onOverlayClick} >
-      <div className="menu__container">
+      <nav className="menu__container">
         <button className="menu__close-button" type="button" onClick={onClose} />
-        <div className="menu__links">
-          <>
-            <button className="menu__link-button" type="button" onClick={onClose}>
+        <ul className="menu__links">
+            <li className="menu__link-button" onClick={onClose}>
               <Link className="menu__link" to="/">Главная</Link>
-            </button>
-            <button className="menu__link-button" type="button" onClick={onClose}>
+            </li>
+            <li className="menu__link-button" onClick={onClose}>
               <Link className="menu__link" to="/movies">Фильмы</Link>
-            </button>
-            <button className="menu__link-button" type="button" onClick={onClose}>
+            </li>
+            <li className="menu__link-button" onClick={onClose}>
               <Link className="menu__link" to="/saved-movies">Сохранённые фильмы</Link>
-            </button>
-          </>
-        </div>
+            </li>
+        </ul>
         <div className="menu__account">
           <Link className="menu__account-button" to="/profile" onClick={onClose}>Аккаунт
-            <button className="menu__account-logo" >
-              <img src={accountLogo} alt="Логотип аккаунта" />
-            </button>
+            <img src={accountLogo} alt="Логотип аккаунта" className="menu__account-logo"/>
           </Link>
         </div>
-      </div>
+      </nav>
     </div>
   );
 }
