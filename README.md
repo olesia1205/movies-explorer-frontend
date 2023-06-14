@@ -1,6 +1,8 @@
 [![LOGO](src/images/logo__main-1.svg)](https://movies.olerastova.nomoredomains.monster "Я ♥ ЯНДЕКС ПРАКТИКУМ!")
-# movies-explorer-frontend
-Frontend-часть дипломной работы
+<div align="center">
+  <h1>Movies-explorer</h1>
+  <h2>Frontend-часть дипломной работы</h2>
+</div>  
 
 ### О проекте
 
@@ -30,6 +32,8 @@ Frontend-часть дипломной работы
 - [x] Nginx;
 - [x] JWT;
 - [x] Postman.
+
+***
 
  `Запуск проекта`
 
