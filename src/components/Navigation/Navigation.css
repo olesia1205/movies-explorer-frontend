@@ -50,9 +50,9 @@
 .navigation__account-logo {
   border: none;
   border-radius: 4px;
-  width: 26px;
-  height: 30px;
-  padding: 8px 0;
+  width: 11.5px;
+  height: 14px;
+  padding: 8px 7.25px;
   background-color: #F9F9F9;
   transition: opacity 0.35s linear;
   cursor: pointer;

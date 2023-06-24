@@ -30,7 +30,7 @@ function Profile({ onUpdateUserInfo, signOut, isLoading, errorMessage }) {
       <h2 className="profile__title">Привет, {currentUser.name}!</h2>
       <fieldset className="profile__inputs-block">
         <label className="profile__label">
-          <p className="profile__placeholder">Имя</p>
+          <span className="profile__placeholder">Имя</span>
           <input
             className="profile__input"
             type="text"
@@ -46,7 +46,7 @@ function Profile({ onUpdateUserInfo, signOut, isLoading, errorMessage }) {
           <span className={`register__input-error ${!isValid && errors.name ? 'register__input-error_active profile__input-error_active' : ''}`} id="name-error" >{errors.name || ''}</span>
         </label>
         <label className="profile__label">
-          <p className="profile__placeholder">E-mail</p>
+          <span className="profile__placeholder">E-mail</span>
           <input
             className="profile__input"
             type="email"
@@ -68,9 +68,9 @@ function Profile({ onUpdateUserInfo, signOut, isLoading, errorMessage }) {
           disabled={!isValid || !isDisabled}
         >Редактировать
         </button>
-        <Link to="/">
+        <div>
           <button className="profile__signout-button" onClick={signOut}>Выйти из аккаунта</button>
-        </Link>
+        </div>
       </div>
     </form>
   );

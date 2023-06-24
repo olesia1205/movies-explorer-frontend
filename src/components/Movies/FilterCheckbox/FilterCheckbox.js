@@ -2,7 +2,7 @@ import React from 'react';
 
 function FilterCheckbox({ onClick, checkboxState }) {
   return (
-    <label className="filtercheckbox">
+    <div className="filtercheckbox">
       <div className="filtercheckbox__checkbox-container">
         <div className="filtercheckbox__checkbox">
           <input
@@ -15,7 +15,7 @@ function FilterCheckbox({ onClick, checkboxState }) {
         </div>
       </div>
       Короткометражки
-    </label>
+    </div>
   );
 }
 

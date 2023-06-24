@@ -13,9 +13,7 @@ function Navigation({ onMenuPopup }) {
       </div>
       <div className="navigation__links-account">
         <Link className="navigation__account-button navigation__link" to="/profile">Аккаунт
-          <button className="navigation__account-logo">
-            <img src={accountLogo} alt="Логотип аккаунта" />
-          </button>
+          <img src={accountLogo} alt="Логотип аккаунта" className="navigation__account-logo"/>
         </Link>
         <button className="navigation__account-burger" onClick={onMenuPopup}/>
       </div>
